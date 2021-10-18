@@ -10,25 +10,23 @@ import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 
 const data = Data;
+let idCount = 2;
 // const [data, setData] = useState(Data)
 
 const reducer = ( state= data, action) => { // 액션 함수.
   switch (action.type) {
 
     case 'addMemo':
-      let addMemeList = [...state, {id: 0, hash: 'test', content: action.data} ] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
+      idCount++  // 이건 시간을 주기로 모든 내용이 업데이트 되도록 실행
+      let addMemeList = [...state, {id: idCount, hash: action.data.hash, content: action.data.content} ] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
       // setData( [data, ...{id: 0, hash: 'test', content: action.data}])
-      return addMemeList
-    
+      return addMemeList   
       
     default:
       return state
-
   }
 
 }
-
-
 
 
 let store = createStore(combineReducers( {reducer} )) 
