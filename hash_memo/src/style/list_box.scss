@@ -2,6 +2,9 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    height: 720px;
+    overflow: scroll;
+    background: rgb(200, 225, 250);
 }
 .list-memo {
     display: flex;

@@ -22,6 +22,7 @@ const InputMemo = (props) => {
     let target = value.split('#')
     let content = target[0]
     let hash = target[1]
+    // 여기 디테일 페이지일때는 조건문 하나 써서, 덮어쓰기하자.
     if (content === '') {
       alert('내용을 입력하세요!')
       return
