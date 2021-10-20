@@ -10,13 +10,7 @@ const InputMemo = (props) => {
   const [inputContent, setInputContent] = useState('')
   const [inputhash, setInputhash] = useState(null)
 
-  const onChangeInput = (e) => {
-    let value = e.target.value;
-    let hash = value.split('#')
-    console.log(value)
-    console.log(hash) 
-  }
-  
+
   const addMemo = () => {
     let value = inputMemo;
     let target = value.split('#')
@@ -27,13 +21,14 @@ const InputMemo = (props) => {
       alert('내용을 입력하세요!')
       return
     }
-    console.log(content)
-    console.log(hash)
     setInputMemo('')
     dispatch( { type: 'addMemo', data: {hash: hash, content: content} });
   }
 
   const PressEnter = (e) => {
+    if (e.key === 'Enter' && e.shiftKey) {
+      return
+    }
     if (e.key === 'Enter') {
       addMemo()
     }
@@ -42,12 +37,13 @@ const InputMemo = (props) => {
     return (
       <>
       <div className= 'input-box'>
-        <input type="text"
-        value={ inputMemo }
-        onChange= { (e) => setInputMemo(e.target.value) }
-        onKeyPress= { (e) => PressEnter(e) }
+        <button className= 'other-btn'> ? </button>
+        <textarea className= 'input-text'
+          value={ inputMemo }
+          onChange= { (e) => setInputMemo(e.target.value) }
+          onKeyPress= { (e) => PressEnter(e) }
         />
-        <button onClick= { () => addMemo() }>추가</button>
+        <button className= 'add-btn' onClick= { () => addMemo() }> ➕ </button>
       </div>
       </>
     )

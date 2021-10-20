@@ -8,10 +8,8 @@ const MakeDetail = (props) => {
 	const state = useSelector(state => state)
 	const dispatch = useDispatch()
 
-	console.log(state.reducer)
 	const { hash } = useParams();
-	console.log(hash)
-	console.log(hash.trim())
+
 	let targetHash;
 	if (hash === 'undefined') {
 		targetHash = state.reducer.filter( v => v.hash === undefined )
@@ -30,10 +28,10 @@ const MakeDetail = (props) => {
 	return (
 		<>
 			<Link to='/'>
-				<button>나가기</button>
+				<button className= 'shift-btn'>나가기</button>
 			</Link>
 
-			<p> {hash !== 'undefined'? hash : '그 외'} 의 디테일 페이지입니다. </p>
+			{/* <p> {hash !== 'undefined'? hash : '그 외'} 의 디테일 페이지입니다. </p> */}
 			
 			<div className="detail-box">
 				{detailMemo}

@@ -21,6 +21,10 @@ let jsonData = JSON.parse(localStorage.getItem('local'));
 let data = jsonData;
 let idCount = localStorage.getItem('idCount');
 
+const saveAndLoad = (list) => {
+  localStorage.setItem('local', JSON.stringify(list)) //새로 업데이트 한 값을 저장해주고
+  jsonData = JSON.parse(localStorage.getItem('local')) // 파싱한 값들을 위에 data 값에 넣어주는 작업.
+}
 
 const reducer = ( state= data, action) => { // 액션 함수.
   switch (action.type) {
@@ -30,9 +34,20 @@ const reducer = ( state= data, action) => { // 액션 함수.
       localStorage.setItem('idCount', idCount)
 
       let addMemeList = [...state, {id: idCount, hash: action.data.hash, content: action.data.content} ] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
-      localStorage.setItem('local', JSON.stringify(addMemeList))
-      jsonData = JSON.parse(localStorage.getItem('local')) // 파싱한 값들을 위에 data 값에 넣어줘야 해서, 필수다.
-      return addMemeList
+      saveAndLoad(addMemeList)
+      console.log(action.data.content)
+      return addMemeList // 위에서 jsonData 가져와서, 사실 이거 안해줘도 댐
+
+    case 'deleteMemo':
+      let deleteMemoList = state.filter( v => v.id !== action.data.id && v.content !== action.data.content) // 없앨 값만 빠진 리스트 구성
+      saveAndLoad(deleteMemoList)
+      return deleteMemoList
+
+    case 'editMemo':
+      let editMemoList = state; // 값 복사
+      editMemoList.splice(action.index, 1, action.data) // 복사한 값에서 수정한 값 넣어주고
+      saveAndLoad(editMemoList)
+      return editMemoList
       
     // 이제 추가 케이스 완수해야됨
     default:
