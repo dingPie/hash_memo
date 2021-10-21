@@ -26,7 +26,7 @@ const saveAndLoad = (list) => {
   jsonData = JSON.parse(localStorage.getItem('local')) // 파싱한 값들을 위에 data 값에 넣어주는 작업.
 }
 
-const reducer = ( state= data, action) => { // 액션 함수.
+const reducer = ( state = data, action) => { // 액션 함수.
   switch (action.type) {
 
     case 'addMemo':
@@ -39,7 +39,7 @@ const reducer = ( state= data, action) => { // 액션 함수.
       return addMemeList // 위에서 jsonData 가져와서, 사실 이거 안해줘도 댐
 
     case 'deleteMemo':
-      let deleteMemoList = state.filter( v => v.id !== action.data.id && v.content !== action.data.content) // 없앨 값만 빠진 리스트 구성
+      let deleteMemoList = state.filter( v => v.id !== action.data.id ) // 없앨 값만 빠진 리스트 구성  | && v.content !== action.data.content 이거 붙이면 안됨.
       saveAndLoad(deleteMemoList)
       return deleteMemoList
 

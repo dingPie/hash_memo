@@ -1,3 +1,5 @@
+$deepBlue: #1f5afc;
+
 .list-box {
     // position: relative;
     display: flex;
@@ -12,34 +14,63 @@
 .list-memo {
     display: flex;
     padding: 4px;
-    margin: 3px;
+    margin: 0 3px ;
+    justify-content: flex-end;
     
     .memo-content {
-        display: -webkit-box;
-        max-width: 300px;
-        padding: 4px;
+        // max-width: 300px;
+        width: 70%;
+        padding: 4px 4px;
+        font-size: 14px;;
         border-radius: 4px;
         background: cornsilk;
+        display: table-cell;
+        vertical-align: middle;
+        display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         text-overflow: ellipsis;
         white-space: pre-wrap;
     }
-    // .memo-content:active { // 클릭시 길이 바꾸는 기능 넣자ㅇㅇ
-    //     -webkit-line-clamp: 10;
-    // }
+    .clicked { // 클릭시 길이 바꾸는 기능 넣자ㅇㅇ
+        // background: red;
+        -webkit-line-clamp: 10;
+    }
+
+    .option-hash-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        
+        .option-btn {
+            margin: 0 4px;
+            align-self: flex-end;
+        }
+    }
+
     .memo-hash {
         display: inline-block;
-        max-width: 120px;
-        height: 20px;
-        padding: 4px;
+        max-width: 80px;
+        height: 16px;
+        padding: 3px;
         margin: 0 4px;
+        font-size: 1.5vh;
         border-radius: 4px;
         background: cornsilk;
         overflow: hidden;
-        white-space:nowrap; // 이게 있어야 문자를 1줄로 쭉 보여줘서, ...처리가 된다.
+        white-space: nowrap; // 이게 있어야 문자를 1줄로 쭉 보여줘서, ...처리가 된다.
         text-overflow: ellipsis;
+    }
+
+    .option-modal {
+        background: coral;
+        span {
+            border: white 1px solid;
+        }
+        .del-btn {
+            transition: 1s;
+        }
     }
 }
 
@@ -59,4 +90,34 @@
     width: 400px;
     height: 200px;
     background: white;
+}
+
+
+
+// input-box
+.input-box {
+    background: $deepBlue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 72px;
+    
+    textarea {
+        margin: 0 8px;
+        width: 80%;
+        height: 24px;
+        transition: 0.4s;
+    }
+    // textarea:focus {
+    //     height: 64px;
+    // }
+    
+    button {
+        border: 0;
+        border-radius: 8px;
+        width: 40px;
+        height: 32px;
+    }
 }

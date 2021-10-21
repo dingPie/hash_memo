@@ -8,6 +8,7 @@ button {
 }
 
 .main-box {
+    position: relative;
     margin: auto;
     max-width: 768px;
     min-width: 320px;
@@ -16,65 +17,42 @@ button {
 }
 .list-box, .grid-box, .detail-box {
     margin: 12px auto 0;
-    height: 83.5%;
+    height: 83.3%;
 }
 
 .nav-bar {
     color: white;
     background: $deepBlue;
     height: 68px;
-}
 
-.list-box::-webkit-scrollbar {
-    width: 4px;
-}
-.list-box::-webkit-scrollbar-thumb {
-    background: $deepBlue;
-    border-radius: 10px;
-}
+    h1 {
+        padding: 10px;
+    }
 
+} 
 .shift-btn {
     position: absolute;
     width: 48px;
     height: 48px;
     border-radius: 48px;
-    border: none;
+    border: white 2px solid;
     box-shadow: 2px 2px 4px $deepBlue;
     color: white;
     background: $deepBlue;
-    top: 10%;
-    left: 3%;
+    top: 1%;
+    right: 4%;
     cursor: pointer;
 }
 
-
-
-// input-box
-.input-box {
+.list-box::-webkit-scrollbar {
+    width: 4px;
+}    
+.list-box::-webkit-scrollbar-thumb {
     background: $deepBlue;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 72px;
-    
-    textarea {
-        margin: 0 8px;
-        width: 80%;
-        height: 24px;
-        transition: 0.4s;
-    }
-    textarea:focus {
-        height: 64px;
-    }
-    
-    button {
-        border: 0;
-        border-radius: 8px;
-        width: 40px;
-        height: 32px;
-    }
-}
+    border-radius: 10px;
+}    
+
+
 
 
 
