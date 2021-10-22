@@ -2,26 +2,59 @@ li {
     list-style: none;
 }
 
-.grid-memo {
+.grid-box {
     display: flex;
-    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-self: center;
+    width: 100%;
+    // max-width: 767px;
+
+}
+.grid-memo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    // flex-wrap: wrap;
     // justify-content: center;
+    
 }
 
 .grid {
-    display: inline-block;
+    // display: inline-block;
     padding: 4px;
     margin: 8px;
-    width: 226px;
-    height: 192px;
+    padding: 8px;
+    // width: 100%;
+    max-width: 356px;
+    height: 180px;
     background: cornsilk;
     border-radius: 8px;
     overflow: hidden;
+    text-decoration: none;
+    
+    span {
+        font-size: 24px;
+    }
     
     li {
-        margin: 4px;
+        width: 95%;
+        max-height: 45px;
+        margin: 4px 4px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid darkgray;
         overflow: hidden;
-        white-space:nowrap; // 이게 있어야 문자를 1줄로 쭉 보여줘서, ...처리가 된다.
         text-overflow: ellipsis;
     }
 }
+
+@media screen and (min-width:768px) {
+    .grid-memo {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width:1200px) {
+    .grid-memo {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+

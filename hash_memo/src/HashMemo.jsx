@@ -23,7 +23,7 @@ const HashMemo = () => {
   return (
     <div className= 'main-box'>
       <div className="nav-bar">
-        <h1>#Memo !</h1>
+        <h1># Memo</h1>
         <button className= 'shift-btn' onClick= {transMode}>
           {icon}
         </button>

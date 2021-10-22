@@ -7,18 +7,7 @@ const InputMemo = (props) => {
   const dispatch = useDispatch() // redux의 액션 함수를 실행시킬 수 있음
 
   const [inputMemo, setInputMemo] = useState('')
-  const { refLastMemo, listDom } = props; 
-
-  // 메세지 추가시 마지막 메모 focus
-  const focusLast = () => {
-    refLastMemo.current.focus() // 마지막 memo에만 ref 지정
-    listDom.current.focus() // list-box DOM
-    let posY = refLastMemo.current.offsetTop;
-    listDom.current.scroll(({ top: posY, left: 0, behavior: 'smooth' }))
-    // 아 추가 함수가 들어가고, 나중에 업데이트 되는거라 그런거같은데...
-    // 추가되는 함수 값에 할수있는 방법이없나 ㅎㅎ;
-    // refLastMemo.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
-  }
+  const { refLastMemo, listDom } = props;  // 이거 필요없음ㅋㅋㅋㅋㅋ
 
 
   const addMemo = () => {
@@ -34,7 +23,6 @@ const InputMemo = (props) => {
     setInputMemo('')
 
     dispatch( { type: 'addMemo', data: {hash: hash, content: content} });
-    focusLast()
   }
 
   const PressEnter = (e) => {
@@ -42,17 +30,17 @@ const InputMemo = (props) => {
     if (e.key === 'Enter') addMemo()
   }
 
-
+  
 
     return (
-      <div className= 'input-box'>
+      <div className= 'bottom-box'>
         <button className= 'other-btn'> ? </button>
         <textarea className= 'input-text'
           value= { inputMemo }
           onChange= { (e) => setInputMemo(e.target.value) }
           onKeyPress= { (e) => PressEnter(e) }
         />
-        <button className= 'add-btn' onClick= { () => addMemo() }> ➕ </button>
+        <button className= 'add-btn' onClick= { () => addMemo() }> <i class="fas fa-plus-circle"></i> </button>
       </div>
     )
 }

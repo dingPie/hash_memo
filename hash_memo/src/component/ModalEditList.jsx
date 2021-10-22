@@ -33,13 +33,12 @@ const ModalEditList = (props) => {
     <div className= 'list-edit-modal-box'>
       <span className= 'edit-modal-x' onClick= {() => setOnEditModal(false)}> x </span>
       
+      <span> #Tag </span>
       <input type="text" value= {hashValue} className= 'edit-modal-hash'
         onChange={ (e) => setHashValue(e.target.value) }
         onKeyPress= { (e) => PressEnter(e) }
       />
-      
-      <br/>
-      
+      <span> Memo </span>
       <textarea value= {contentValue} className= 'edit-modal-content'
         onChange={ (e) => setContentValue(e.target.value) }
         onKeyPress= { (e) => PressEnter(e)}

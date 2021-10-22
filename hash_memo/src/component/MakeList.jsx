@@ -32,12 +32,20 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 		setOnEditModal(true)
 	}
 
-	useEffect(() => {
-		refLastMemo.current.focus() // 마지막 memo에만 ref 지정
+  // 메세지 추가시 마지막 메모 focus
+  const focusLast = () => {
+    refLastMemo.current.focus() // 마지막 memo에만 ref 지정
     listDom.current.focus() // list-box DOM
     let posY = refLastMemo.current.offsetTop;
     listDom.current.scroll(({ top: posY, left: 0, behavior: 'auto' }))
-	}, [refLastMemo])
+    // refLastMemo.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
+  }
+
+
+	useEffect(() => {
+		focusLast()
+	}, [state]) // 수정시점을 state로 하니까되네;
+	// 대신 삭제시에도 되는게 에러다. 맘에 안들면 추가시에 하자.
 
 
 	let listMemo = state.reducer.map( (v, i, a) =>  // reducer의 state를 이용하는 함수
@@ -45,21 +53,30 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 		<div className= 'list-memo' ref= { i === a.length - 1 ? refLastMemo : null } >
 
 			{ // 확장 눌렀을 때만 나오는 추가메뉴들
-				v.id === onOptionModal ? // 클릭한 메세지의 id값과 optionModal의 id를 비교하여, 하나의 modal만 띄워준다.
-				<div className= 'option-modal'>
-					<span className= 'del-btn' onClick= { () => deleteMemoList(v.id, v.hash, v.content) }> 삭제 </span> 
-					<span className= 'edit-btn' onClick= { () => openEditModal(v.id, v.hash, v.content) }> 수정 </span>
-					<span className='exp-btn' onClick= {() => v.id === expandMemo ? setExpandMemo('') : setExpandMemo(v.id)}> 더보기 </span> {/* 더보기 눌렀을 때, 하나만 확장하도록 id 비교 */}
-				</div>
+				v.id === onOptionModal  // 클릭한 메세지의 id값과 optionModal의 id를 비교하여, 하나의 modal만 띄워준다.
+				? <div className= 'option-modal'>
+
+						<span className= 'del-btn'onClick= { () => deleteMemoList(v.id, v.hash, v.content) }>
+							<i class="fas fa-trash"></i>
+						</span> 
+						<span className= 'edit-btn' onClick= { () => openEditModal(v.id, v.hash, v.content) }>
+							<i class="far fa-edit"></i>
+						</span>
+						<span className='exp-btn' onClick= {() => v.id === expandMemo ? setExpandMemo('') : setExpandMemo(v.id)}>
+							<i class="fas fa-arrows-alt-v"></i>
+						</span> {/* 더보기 눌렀을 때, 하나만 확장하도록 id 비교 */}
+				
+					</div>
 				: null
 			}
 			{/* <span> {v.id} </span> */}
 
 			<div className="option-hash-box">
+				
 				<span className='option-btn'
-					onClick= {() => v.id === onOptionModal ? setOnOptionModal('') : setOnOptionModal(v.id) }>
+					onClick= {() => v.id === onOptionModal ? setOnOptionModal('') : setOnOptionModal(v.id) }> {/*  이걸 클릭했을때, 클릭한 메모의 id를 참조하여 option창을 on/off해준다 */}
 					<i class="fas fa-plus-square"></i>
-				</span> {/*  이걸 클릭했을때, 클릭한 메모의 id를 참조하여 option창을 on/off해준다 */}
+				</span> 
 				{ v.hash && <span className= 'memo-hash'> {v.hash} </span> } 
 			</div>
 			
