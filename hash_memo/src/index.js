@@ -15,7 +15,7 @@ if (!localStorage.getItem('local')) {
   localStorage.setItem('local', JSON.stringify(Data))
 } 
 if (!localStorage.getItem('idCount')) {
-  localStorage.setItem('idCount', 10)
+  localStorage.setItem('idCount', 11)
 }
 let jsonData = JSON.parse(localStorage.getItem('local'));
 let data = jsonData;

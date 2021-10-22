@@ -14,17 +14,14 @@ $deepBlue: #1f5afc;
     padding: 4px;
     margin: 0 3px ;
     justify-content: flex-end;
-    max-width: 100%; // 이거 이런식으로 정해야 최대길이 안됨
+    max-width: 100%;
     
     .memo-content {
-        // max-width: 300px;
         width: 65%;
-        padding: 4px 4px;
+        padding: 4px 2px;
         font-size: 14px;;
         border-radius: 4px;
         background: cornsilk;
-        // display: table-cell;
-        // vertical-align: middle;
 
         // 스크롤
         display: -webkit-box;

@@ -43,17 +43,22 @@ export default [
     },
     {
         id: 8,
-        hash: '',
+        hash: undefined,
         content: '해시태그 없이 입력도 가능하며, 피드백은 환영합니다.'
     },
     {
         id: 9,
-        hash: '',
-        content: '감사합니다. '
+        hash: undefined,
+        content: '감사합니다.'
     },
     {
         id: 9,
         hash: '버그',
-        content: '몇 몇 글자가 따로 떨어져 보이는건 버그입니다... 수정해야죠...'
+        content: '"다"가 떨어져보이는 버그가 있습니다.'
+    },
+    {
+        id: 10,
+        hash: '버그',
+        content: '웹에서 클릭시, 태그가 없는 페이지가 안보이는 버그가 있습니다.'
     },
 ]
