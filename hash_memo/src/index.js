@@ -36,6 +36,7 @@ const reducer = ( state = data, action) => { // 액션 함수.
       let addMemeList = [...state, {id: idCount, hash: action.data.hash, content: action.data.content} ] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
       saveAndLoad(addMemeList)
       console.log(action.data.content)
+      console.log(action.data.hash)
       return addMemeList // 위에서 jsonData 가져와서, 사실 이거 안해줘도 댐
 
     case 'deleteMemo':

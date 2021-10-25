@@ -20,7 +20,7 @@ button {
  .list-box, .grid-box, .detail-box {
     margin: 6px auto;
     overflow-y: scroll;
-    height: 80%;
+    height: 81.3%;
 }
 .list-box::-webkit-scrollbar, .grid-box::-webkit-scrollbar, .detail-box::-webkit-scrollbar  {
     width: 4px;
@@ -71,8 +71,8 @@ button {
     textarea {
         margin: 0 4px;
         width: 80%;
-        height: 24px;
-        transition: 0.4s;
+        height: 30px;
+        // transition: 0.4s;
     }
     button {
         width: 40px;

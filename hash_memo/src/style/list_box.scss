@@ -11,59 +11,62 @@ $deepBlue: #1f5afc;
 
 .list-memo {
     display: flex;
+    flex-direction: column;
     padding: 4px;
     margin: 0 3px ;
-    justify-content: flex-end;
-    max-width: 100%;
-    
-    .memo-content {
-        width: 65%;
-        padding: 4px 2px;
-        font-size: 14px;;
-        border-radius: 4px;
-        background: cornsilk;
+    max-width: 80%;
 
-        // 스크롤
-        display: -webkit-box;
-        overflow-y: hidden;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        text-overflow: ellipsis;
-        white-space: pre-wrap;
-    }
-    .clicked { // 클릭시 길이 바꾸는 기능 넣자ㅇㅇ
-        // background: red;
-        -webkit-line-clamp: 10;
-    }
-
-    .option-hash-box {
+    .list-main {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        
+        justify-content: flex-end;
+
+        .memo-content {
+            padding: 4px 2px;
+            // font-size: 14px;;
+            border-radius: 4px;
+            background: cornsilk;
+            word-break: keep-all;
+
+            // 스크롤
+            display: -webkit-box;
+            overflow-y: hidden;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            white-space: pre-wrap;
+        }
+        .clicked { // 클릭시 길이 바꾸는 기능 넣자
+            -webkit-line-clamp: 10;
+        }
+
+            
         .option-btn {
             margin: 0 4px;
-            align-self: flex-end;
             color: $deepBlue;
         }
-    }
 
-    .memo-hash {
-        display: inline-block;
-        max-width: 80px;
-        height: 16px;
-        padding: 3px;
-        margin: 0 4px;
-        font-size: 1.5vh;
-        border-radius: 4px;
-        background: cornsilk;
-        overflow: hidden;
-        white-space: nowrap; // 이게 있어야 문자를 1줄로 쭉 보여줘서, ...처리가 된다.
-        text-overflow: ellipsis;
-    }
-
+        .memo-hash {
+            display: inline-block;
+            max-width: 64px;
+            min-width: 60px;
+            height: 20px;
+            padding: 3px;
+            margin: 0 4px;
+            text-align: center;
+            line-height: 20px;
+            align-self: flex-end;
+            // font-size: 1.5vh;
+            border-radius: 4px;
+            background: cornsilk;
+            overflow: hidden;
+            white-space: nowrap; // 이게 있어야 문자를 1줄로 쭉 보여줘서, ...처리가 된다.
+            text-overflow: ellipsis;
+        }
+}
     .option-modal {
         display: flex;
+        align-self: flex-end;
+        margin-right: 24px;
 
         span {
             background: $deepBlue;

@@ -50,7 +50,19 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 
 	let listMemo = state.reducer.map( (v, i, a) =>  // reducer의 state를 이용하는 함수
 
-		<div className= 'list-memo' ref= { i === a.length - 1 ? refLastMemo : null } >
+		<div className= 'list-memo' ref= { i === a.length - 1 ? refLastMemo : null } > {/* 마지막 list에만 ref를 지정 */}
+
+			<div className= 'list-main'>
+				{ v.hash && <span className= 'memo-hash'> {v.hash} </span> } 
+				
+				<span className= { expandMemo === v.id ? 'memo-content clicked' : 'memo-content' }>	{v.content}	</span>  {/* expandMemo 가 id로 설정되는데, 현재 누른 값만 clicked로 설정되고, 나머진 안된다.  */}
+			
+					<span className='option-btn'
+						onClick= {() => v.id === onOptionModal ? setOnOptionModal('') : setOnOptionModal(v.id) }> {/*  이걸 클릭했을때, 클릭한 메모의 id를 참조하여 option창을 on/off해준다 */}
+						<i class="fas fa-plus-square"></i>
+					</span> 
+
+			</div>
 
 			{ // 확장 눌렀을 때만 나오는 추가메뉴들
 				v.id === onOptionModal  // 클릭한 메세지의 id값과 optionModal의 id를 비교하여, 하나의 modal만 띄워준다.
@@ -69,18 +81,7 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 					</div>
 				: null
 			}
-			{/* <span> {v.id} </span> */}
 
-			<div className="option-hash-box">
-				
-				<span className='option-btn'
-					onClick= {() => v.id === onOptionModal ? setOnOptionModal('') : setOnOptionModal(v.id) }> {/*  이걸 클릭했을때, 클릭한 메모의 id를 참조하여 option창을 on/off해준다 */}
-					<i class="fas fa-plus-square"></i>
-				</span> 
-				{ v.hash && <span className= 'memo-hash'> {v.hash} </span> } 
-			</div>
-			
-			<span className= { expandMemo === v.id ? 'memo-content clicked' : 'memo-content' }>	{v.content}	</span>  {/* expandMemo 가 id로 설정되는데, 현재 누른 값만 clicked로 설정되고, 나머진 안된다.  */}
 		</div>
 	)
 
