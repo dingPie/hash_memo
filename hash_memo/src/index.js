@@ -13,11 +13,10 @@ import { combineReducers, createStore } from 'redux';
 // 초기값 실행
 if (!localStorage.getItem('local')) { 
   localStorage.setItem('local', JSON.stringify(Data))
-} 
-if (!localStorage.getItem('idCount')) {
   localStorage.setItem('idCount', 11)
-}
-let jsonData = JSON.parse(localStorage.getItem('local'));
+} 
+
+let jsonData = JSON.parse(localStorage.getItem('local')); // data에 넣을 변수
 let data = jsonData;
 let idCount = localStorage.getItem('idCount');
 
@@ -30,13 +29,11 @@ const reducer = ( state = data, action) => { // 액션 함수.
   switch (action.type) {
 
     case 'addMemo':
-      idCount++  // 이건 시간을 주기로 모든 내용이 업데이트 되도록 실행
+      idCount++
       localStorage.setItem('idCount', idCount)
 
       let addMemeList = [...state, {id: idCount, hash: action.data.hash, content: action.data.content} ] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
       saveAndLoad(addMemeList)
-      console.log(action.data.content)
-      console.log(action.data.hash)
       return addMemeList // 위에서 jsonData 가져와서, 사실 이거 안해줘도 댐
 
     case 'deleteMemo':
@@ -49,8 +46,24 @@ const reducer = ( state = data, action) => { // 액션 함수.
       editMemoList.splice(action.index, 1, action.data) // 복사한 값에서 수정한 값 넣어주고
       saveAndLoad(editMemoList)
       return editMemoList
+
+    case 'changeColor':
+      let changeColorList = state.map( v => 
+        v.hash === action.targetHash // 해당 targethash와 동일한 경우에만,
+        ? { id: v.id, hash: v.hash, content: v.content, color: action.color } // 스타일 지정해주고
+        : { id: v.id, hash: v.hash, content: v.content, color: v.color } // 아니묜 그대로
+      )
+      saveAndLoad(changeColorList)
+      console.log(changeColorList)
+      // console.log(action.targetHashs)
+      // console.log(action.targetHash)
+      // console.log(action.color)
+      // 보낸 컬러값, li 값 필요.
+      // li와 같은 hash 값을 가진 데이터들을 찾음
+      // 이런 애들 다 데이터에 style 지정 (기존 다른데이터는 유지하고, style 만 추가 or 변경하게 지정)
+      // 이 데이터 값을 가져와서 style 지정할 애들 ex) detail페이지, list에 hash, grid페이지 등 지정
+      return changeColorList
       
-    // 이제 추가 케이스 완수해야됨
     default:
       return state
   }

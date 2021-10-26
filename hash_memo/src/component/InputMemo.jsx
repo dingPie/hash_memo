@@ -7,12 +7,11 @@ const InputMemo = (props) => {
   const dispatch = useDispatch() // redux의 액션 함수를 실행시킬 수 있음
 
   const [inputMemo, setInputMemo] = useState('')
-  const { refLastMemo, listDom } = props;  // 이거 필요없음ㅋㅋㅋㅋㅋ
 
 
   const addMemo = () => {
     let value = inputMemo; // 입력값
-    let target = value.split('#') // split으로 #전, 후로 arrya로 나눈다
+    let target = value.split('#') // split으로 hash와 content를 나눈다
     let content = target[0].trim()
     let hash = target[1]
     // 여기 디테일 페이지일때는 조건문 하나 써서, 덮어쓰기하자.
@@ -35,11 +34,13 @@ const InputMemo = (props) => {
     return (
       <div className= 'bottom-box'>
         <button className= 'other-btn'> ? </button>
+
         <textarea className= 'input-text'
           value= { inputMemo }
           onChange= { (e) => setInputMemo(e.target.value) }
           onKeyPress= { (e) => PressEnter(e) }
         />
+        
         <button className= 'add-btn' onClick= { () => addMemo() }> <i class="fas fa-plus-circle"></i> </button>
       </div>
     )

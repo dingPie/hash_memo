@@ -10,12 +10,14 @@ import '../style/list_box.scss'
 const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 함수.
 	const state = useSelector(state => state) // connect 없이 redux의 state 조회가능
 	const dispatch = useDispatch()
-	const [onOptionModal, setOnOptionModal] = useState('') // 수정, 추가 등 받아오는 값
+
+	const [onOptionModal, setOnOptionModal] = useState('') // 수정, 추가 등 받아오는 값, 해당되는 한가지만 띄워줘야해서, t/f가 아닌 스트링으로 받아옴
 	const [onEditModal, setOnEditModal] = useState(false) // 수정창 모달 on/off
-	const [editValue, seteditValue] = useState('') // 수정창 모달에 전달할 value
+	const [editValue, setEditValue] = useState('') // 수정창 모달에 전달할 value
 	const [expandMemo, setExpandMemo] = useState('') // 확대하여 보여줄 값의 style 지정을 위한 state
+
 	const refLastMemo = useRef() // 마지막 메모의 DOM 지정을 위한 Ref
-	const listDom = useRef()
+	const listDom = useRef() // listBox 자체 지정
 
 	// 메모 삭제
 	const deleteMemoList = (id, hash, content) => { //왜 이렇게 인자를 다 따로 빼줘야 될까?
@@ -26,9 +28,9 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 
 	// 수정용 modal창을 열고, 해당 값을 전달해주는 함수.
 	const openEditModal = (id, hash, content) => {
-		// 클릭한 내용의 id랑 content로 찾아서, 수정하는 모달창을 띄워준다.
+		// 클릭한 내용의 id랑 content로 찾아서, 컴포넌트로 전달해준다.
 		let target= state.reducer.filter( value => value.id === id && value.content === content )[0]
-		seteditValue(target)
+		setEditValue(target)
 		setOnEditModal(true)
 	}
 
@@ -53,7 +55,8 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 		<div className= 'list-memo' ref= { i === a.length - 1 ? refLastMemo : null } > {/* 마지막 list에만 ref를 지정 */}
 
 			<div className= 'list-main'>
-				{ v.hash && <span className= 'memo-hash'> {v.hash} </span> } 
+				{ v.hash && <span className= 'memo-hash' style= {{background: v.color}}
+				> {v.hash} </span> } 
 				
 				<span className= { expandMemo === v.id ? 'memo-content clicked' : 'memo-content' }>	{v.content}	</span>  {/* expandMemo 가 id로 설정되는데, 현재 누른 값만 clicked로 설정되고, 나머진 안된다.  */}
 			
@@ -61,7 +64,6 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 						onClick= {() => v.id === onOptionModal ? setOnOptionModal('') : setOnOptionModal(v.id) }> {/*  이걸 클릭했을때, 클릭한 메모의 id를 참조하여 option창을 on/off해준다 */}
 						<i class="fas fa-plus-square"></i>
 					</span> 
-
 			</div>
 
 			{ // 확장 눌렀을 때만 나오는 추가메뉴들

@@ -1,9 +1,7 @@
 /* eslint-disable */
 
 import React, { useState } from "react";
-import { useSelector,useDispatch } from "react-redux";
 import { Link, Route, Switch } from 'react-router-dom';
-import InputMemo from "./component/InputMemo";
 import MakeMemo from "./component/MakeList";
 import MakeGrid from "./component/MakeGrid";
 import MakeDetail from "./component/MakeDetail";
@@ -13,7 +11,6 @@ const HashMemo = () => {
   const [mode, setMode] = useState('list')
   const [icon, setIcon] = useState( <i class="fas fa-th-large"></i> )
 
-  
   const transMode = () => {
     mode === 'list'
     ? (setMode('grid'), setIcon( <i class="far fa-comment-alt"></i> ) )
@@ -22,6 +19,7 @@ const HashMemo = () => {
 
   return (
     <div className= 'main-box'>
+      
       <div className="nav-bar">
         <h1># Memo</h1>
         <button className= 'shift-btn' onClick= {transMode}>

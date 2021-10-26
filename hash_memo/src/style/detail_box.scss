@@ -1,23 +1,27 @@
 $deepBlue: #1f5afc;
 
 .detail-box {
-    margin: 4px auto;
-    width: 95%;
+    display: flex;
+    flex-direction: column;
+    margin: 6px;
+    // width: 98%;
     border-radius: 8px;
     background: cornsilk;
 
     .detail-hash {
         display: inline-block;
-        width: 136px;
+        align-self: center;
+        width: 90%;
         height: 48px;
         margin: 8px;
-        text-align: center;
+        padding: 4px 12px;
         line-height: 48px;
-        font-size: 20px;
-        color: white;
-        background: $deepBlue;
-        border-radius: 8px;
-        border: white solid 4px;
+        font-size: 22px;
+        font-weight: 600;
+        // color: white;
+        background-color:  rgba( 100, 100, 100, 0.15 );
+        border-radius: 16px;
+        // border: white solid 4px;
     }
     .detail-memo {
 
@@ -33,4 +37,12 @@ $deepBlue: #1f5afc;
             white-space: pre-wrap;
         }
     }
+
+    .detail-add-btn {
+        display: block;
+        margin: 6px auto;
+        width: 48px;
+    }
+
+
 }
