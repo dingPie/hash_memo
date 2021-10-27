@@ -3,7 +3,7 @@ $deepBlue: #1f5afc;
 .detail-box {
     display: flex;
     flex-direction: column;
-    margin: 6px;
+    margin: 12px;
     // width: 98%;
     border-radius: 8px;
     background: cornsilk;
@@ -11,26 +11,26 @@ $deepBlue: #1f5afc;
     .detail-hash {
         display: inline-block;
         align-self: center;
-        width: 90%;
+        width: 94%;
         height: 48px;
-        margin: 8px;
+        margin: 8px 0;
         padding: 4px 12px;
         line-height: 48px;
         font-size: 22px;
         font-weight: 600;
         // color: white;
-        background-color:  rgba( 100, 100, 100, 0.15 );
+        background-color: rgba( 220, 220, 220, 0.3 );
         border-radius: 16px;
         // border: white solid 4px;
     }
     .detail-memo {
 
         .detail-content {
-            padding: 4px;
-            margin: 4px 12px;
+            padding: 8px;
+            margin: 0 12px;
             padding-bottom: 8px;
             border-bottom: 1px solid darkgray;
-            background: cornsilk;
+            // background: cornsilk;
             // background: rgb(248, 246, 236);
             // box-shadow: 2px 2px 2px lightgray;
             // border-radius: 4px;
@@ -38,10 +38,14 @@ $deepBlue: #1f5afc;
         }
     }
 
-    .detail-add-btn {
+    .detail-add-btn, .detail-edit-btn {
         display: block;
         margin: 6px auto;
-        width: 48px;
+        width: 80px;
+        height: 32px;
+        background: rgba( 220, 220, 220, 0.3 );
+        border: none;
+        border-radius: 32px;
     }
 
 

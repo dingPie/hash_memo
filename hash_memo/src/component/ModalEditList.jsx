@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import '../style/list_box.scss'
 
@@ -6,34 +6,41 @@ const ModalEditList = (props) => {
   const state = useSelector(state => state);
   const dispatch = useDispatch()
   let { editValue, setOnEditModal, onEditModal } = props;
+  const refText = useRef() // textarea 포커스용
 
   const [hashValue, setHashValue] = useState(editValue.hash)
   const [contentValue, setContentValue] = useState(editValue.content)
 
   let targetIndex = state.reducer.indexOf(editValue)
 
-  // hash 공백을 막기위한 함수
-  const changeHash = (e) => {
-    setHashValue(e.target.value)
-    if (e.target.value === '') { // 빈 값일때는 undefined로 지정
-      setHashValue(undefined)
-    }
-  }
+  useEffect(() => {
+    refText.current.focus()
+  }, [])
 
-  // dispatch와 modal off
+  // 수정함수:  dispatch와 modal off
   const editMemoList = () => {
+    // console.log(editValue.color)
     dispatch({
       type: 'editMemo',
       index: targetIndex,
-      data: {id: editValue.id, hash: hashValue, content: contentValue}
+      data: {id: editValue.id, hash: hashValue, content: contentValue, color: editValue.color}
     })
       setOnEditModal(false)
   }
+  // 엔터키로 입력
   const PressEnter = (e) => {
     if (e.key === 'Enter' && e.shiftKey) return
     // 모바일에서 enter 할만한걸 추가하자.
     if (e.key === 'Enter') {
       editMemoList()
+    }
+  }
+
+  // hash 공백을 막기위한 함수
+  const changeHash = (e) => {
+    setHashValue(e.target.value)
+    if (e.target.value === '') { // 빈 값일때는 undefined로 지정
+      setHashValue(undefined)
     }
   }
 
@@ -44,7 +51,7 @@ const ModalEditList = (props) => {
       <span className= 'edit-modal-x' onClick= {() => setOnEditModal(false)}> ✖ </span>
       
       <span> #Tag </span>
-      <input type="text" value= {hashValue} className= 'edit-modal-hash'
+      <input type="text" value= {hashValue} className= 'edit-modal-hash' ref= {refText}
         onChange={ (e) => changeHash(e) }
         onKeyPress= { (e) => PressEnter(e) }
       />

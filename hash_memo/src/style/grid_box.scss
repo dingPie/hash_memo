@@ -7,6 +7,8 @@ li {
     align-items: flex-start;
     justify-self: center;
     width: 100%;
+    margin: 8px auto;
+    // padding: 4px
     // max-width: 767px;
 
 }
@@ -21,7 +23,7 @@ li {
 .grid {
     // display: inline-block;
     padding: 4px;
-    margin: 8px;
+    margin: 4px;
     padding: 8px;
     // width: 100%;
     max-width: 356px;
@@ -30,6 +32,7 @@ li {
     border-radius: 8px;
     overflow: hidden;
     text-decoration: none;
+    box-shadow: 1px 1px 3px lightgray;
     
     span {
         font-size: 24px;

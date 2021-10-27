@@ -12,15 +12,15 @@ const MenuBar = (props) => {
   // 색상 코드값
   const colorSet = {
     cornsilk: 'cornsilk', 
-    red: '#ff867c',
-    blue: '#b3e5fc',
-    green: '#c5e1a5',
+    red: '#ff9da9',
+    blue: '#b6ffff',
+    green: '#d7ffd9',
     yellow: '#fff59d'
   }
   
   const testOnPalete = (color) => {
     if (!hash) { 
-    alert ('현재 상세페이지에서만 클릭이 가능합니다.')
+    alert ('현재 상세페이지에서만 클릭이 가능하며, 태그가 없는 메모는 색상지정이 불가능합니다.')
     return // 현재 디테일에서만 클릭 가능한 상황
     } 
  

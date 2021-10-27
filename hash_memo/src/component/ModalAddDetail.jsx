@@ -17,7 +17,7 @@ const ModalAddDetail = (props) => {
 	let modalMemoStyle = { // 좌표값이 매번 변하니, 변수로 지정
 		position: "absolute",
 		zIndex: 2,
-		background: 'cornsilk',
+		background: 'transparent',
     fontSize: '16px',
 		left: modalPosition[0],
 		top: modalPosition[1],
@@ -26,16 +26,22 @@ const ModalAddDetail = (props) => {
 	};
 
   const btnPositon = { //버튼위치
-    position: 'absolute', zIndex: 3, display: 'inline-block', top:  modalPosition[1] + modalPosition[3] + 12, left: '48%'
+    position: 'absolute', display: 'block', zIndex: 3,
+    top:  modalPosition[1] + modalPosition[3] + 12, left: '42%'
   }
   
   const addMemoDetail = () => { // dispatch 하면서, 모달창 닫아줌
-    dispatch( { type: 'addMemo',
+    dispatch( {
+      type: 'addMemo',
       data: {hash: hash, content: modalContent}
     });
     setOnAddMemo(false)
   }
-
+  const PressEnter = (e) => {
+    if (e.key === 'Enter' && e.shiftKey) return 
+    if (e.key === 'Enter') addMemoDetail()
+  }
+  
   return (
     <div>
       
@@ -43,10 +49,11 @@ const ModalAddDetail = (props) => {
         style= {modalMemoStyle}
         value= {modalContent}
         onChange= { (e) => setModalContent(e.target.value)}
+        onKeyPress= {e => PressEnter(e)}
       >
       </textarea>
 
-      <button style= {btnPositon}
+      <button style= {btnPositon} className= 'detail-add-btn'
         onClick= {addMemoDetail}
         > 추가
       </button>

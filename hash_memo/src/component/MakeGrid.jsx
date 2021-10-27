@@ -18,7 +18,7 @@ const hashTags = () => {
 	let value = target.filter( (v, i) => target.indexOf(v) === i ) // 중복값 제거
 	// indexOf 하면 첫번째 값만 나오기 때문에, 중복되는 i의 id의 경우 indexOf 값이 달라질 수 밖에 없다
 	// 그럼 두번째 값부턴 false가 되기 때문에, 자연스럽게 indexOf(v) == i 인 첫 값들만 남게 되는것.
-	console.log(value)
+	console.log(value) // undefined도 오류없이 잘 나온다.
 	return value
 }
 

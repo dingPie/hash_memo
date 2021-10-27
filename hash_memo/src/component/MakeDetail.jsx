@@ -41,7 +41,7 @@ const MakeDetail = (props) => {
 			setOnEditMemo(false)
 			return
 		}
-		let addPosition =refDetail.current.offsetTop // 현재 추가 버튼이 위치한, 가장 아래에 박스를 추가
+		let addPosition = refDetail.current.offsetTop // 현재 추가 버튼이 위치한, 가장 아래에 박스를 추가
 		setModalContent('') // 이건 비워주고 (아니면 수정했었던 값이 그대로 온다.)
 		setModalPosition([10, addPosition, '94.5%', 48]) // 임의로 지정해놓은 사이즈
 		setOnAddMemo(!onAddMemo) // on / off
@@ -54,8 +54,15 @@ const MakeDetail = (props) => {
 			{v.content.trim()}
 		</li>
 	)
-
-
+	
+	// detail의 모든 값이 삭제되어서, 빈 값이 되었을때 값을 못 불러옴을 방지해주기 위한 함수
+	let setColor = () => { 
+		let value = state.reducer.filter( v => v.hash === hash )[0]
+		if (!value) {
+			value = ''
+		}
+		return value
+	}
 
 	return (
 		<>
@@ -64,9 +71,11 @@ const MakeDetail = (props) => {
 				{/* 이거,z-index가 높아서, 기존 전환키 위에 덮힌다ㅋㅋㅋㅋㅋ */}
 			</Link>
 
-			<div className= "detail-box" style= {{background: state.reducer.filter( v => v.hash === hash )[0].color}} > 
-			  
-				<span className= 'detail-hash'> # {hash !== undefined ? hash : '그 외'} </span>
+			<div className= "detail-box"  style= {{ background: setColor().color }} > 
+			  {/* style= {{ background: setColor().color }} */}
+				<span className= 'detail-hash'>
+					# {hash !== undefined ? hash : '그 외'}
+				</span>
 
 				<div className="detail-memo">
 					{detailMemo}
@@ -80,15 +89,17 @@ const MakeDetail = (props) => {
 						setModalContent= {setModalContent} setOnEditMemo= {setOnEditMemo}
 					/>
 				}
-
+					
+				{ !onAddMemo && !onEditMemo &&
 					<button  className='detail-add-btn'	ref={refDetail} 
 						onClick={(e)=> addMemoDetail(e)}>추가
 					</button>
-
+				}
+				
 				{
 					onAddMemo &&
 					<ModalAddDetail
-						modalPosition= {modalPosition} modalContent= {modalContent} hash = {hash}
+						modalPosition= {modalPosition} modalContent= {modalContent} hash = {hash} editTarget= {editTarget}
 						setModalContent= {setModalContent} setOnAddMemo= {setOnAddMemo}
 					/>
 				}

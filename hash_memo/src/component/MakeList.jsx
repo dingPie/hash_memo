@@ -58,7 +58,9 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 				{ v.hash && <span className= 'memo-hash' style= {{background: v.color}}
 				> {v.hash} </span> } 
 				
-				<span className= { expandMemo === v.id ? 'memo-content clicked' : 'memo-content' }>	{v.content}	</span>  {/* expandMemo 가 id로 설정되는데, 현재 누른 값만 clicked로 설정되고, 나머진 안된다.  */}
+				<span className= { expandMemo === v.id ? 'memo-content clicked' : 'memo-content' }>
+					{v.content} {/* expandMemo 가 id로 설정되는데, 현재 누른 값만 clicked로 설정되고, 나머진 안된다.  */}
+				</span>  
 			
 					<span className='option-btn'
 						onClick= {() => v.id === onOptionModal ? setOnOptionModal('') : setOnOptionModal(v.id) }> {/*  이걸 클릭했을때, 클릭한 메모의 id를 참조하여 option창을 on/off해준다 */}
