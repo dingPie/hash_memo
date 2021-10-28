@@ -1,4 +1,6 @@
 $deepBlue: #1f5afc;
+$boxShadow: 1px 1px 6px lightgray;
+$bgOpacity: rgba( 220, 220, 220, 0.3 );
 
 .detail-box {
     display: flex;
@@ -7,6 +9,7 @@ $deepBlue: #1f5afc;
     // width: 98%;
     border-radius: 8px;
     background: cornsilk;
+    box-shadow: $boxShadow;
 
     .detail-hash {
         display: inline-block;
@@ -19,7 +22,7 @@ $deepBlue: #1f5afc;
         font-size: 22px;
         font-weight: 600;
         // color: white;
-        background-color: rgba( 220, 220, 220, 0.3 );
+        background-color: $bgOpacity;
         border-radius: 16px;
         // border: white solid 4px;
     }
@@ -43,7 +46,7 @@ $deepBlue: #1f5afc;
         margin: 6px auto;
         width: 80px;
         height: 32px;
-        background: rgba( 220, 220, 220, 0.3 );
+        background: $bgOpacity;
         border: none;
         border-radius: 32px;
     }

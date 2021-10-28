@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import InputMemo from "./InputMemo";
+import Notice from "./Notice";
 
 import ModalEditList from './ModalEditList'
 import '../style/list_box.scss'
@@ -16,6 +17,9 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 	const [editValue, setEditValue] = useState('') // 수정창 모달에 전달할 value
 	const [expandMemo, setExpandMemo] = useState('') // 확대하여 보여줄 값의 style 지정을 위한 state
 
+	const [onNotice, setOnNotice] = useState(true) // notice 모달창 관리
+	// const [targetNotice, setTargetNotice] = useState('') // notice에 설정할 target 설정
+
 	const refLastMemo = useRef() // 마지막 메모의 DOM 지정을 위한 Ref
 	const listDom = useRef() // listBox 자체 지정
 
@@ -23,6 +27,7 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 	const deleteMemoList = (id, hash, content) => { //왜 이렇게 인자를 다 따로 빼줘야 될까?
 		if (window.confirm('정말 삭제하시겠습니까?')) {
 			dispatch({ type: 'deleteMemo', data: {id: id, hash: hash, content: content } })
+			dispatch({ type: 'setNotice', data: '' }) // 공지도 삭제해주는 함수
 		}
 	}
 
@@ -34,6 +39,16 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 		setOnEditModal(true)
 	}
 
+	const settingNotice = (value) => {
+		setOnNotice(true)
+		dispatch({
+			type: 'setNotice',
+			data: value
+		})
+		setOnOptionModal('')
+	}
+
+
   // 메세지 추가시 마지막 메모 focus
   const focusLast = () => {
     refLastMemo.current.focus() // 마지막 memo에만 ref 지정
@@ -43,10 +58,14 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
     // refLastMemo.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
   }
 
+	// 자동으로 optionModal을 닫아주기 위한 Effect. delete시에는 통째로 사라지므로 안해줘도된다
+	useEffect(() => { 
+		setOnOptionModal('')
+	}, [onEditModal, expandMemo])
 
 	useEffect(() => {
 		focusLast()
-	}, [state]) // 수정시점을 state로 하니까되네;
+	}, [state.reducer]) // 수정시점을 state로 하니까 추가된 메모까지 포커스된다.
 	// 대신 삭제시에도 되는게 에러다. 맘에 안들면 추가시에 하자.
 
 
@@ -81,6 +100,9 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 						<span className='exp-btn' onClick= {() => v.id === expandMemo ? setExpandMemo('') : setExpandMemo(v.id)}>
 							<i class="fas fa-arrows-alt-v"></i>
 						</span> {/* 더보기 눌렀을 때, 하나만 확장하도록 id 비교 */}
+						<span className="on-notice-btn" onClick= {() => settingNotice(v)}>
+							<i class="fas fa-thumbtack"></i>
+						</span>
 				
 					</div>
 				: null
@@ -95,12 +117,17 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 		<>
 		<div className= 'list-box' ref = {listDom}>
 
+			{ onNotice && state.notice !== '' && //on상태와 notice가 빈값이 아닐때만 표시한다
+				<Notice setOnNotice= {setOnNotice} />	
+			}
+
 			{ listMemo }
 
 			{ onEditModal === true &&
 				< ModalEditList
 				setOnEditModal= {setOnEditModal} onEditModal= {onEditModal}
-				editValue= {editValue} /> }
+				editValue= {editValue} />
+			}
 		</div>
 
 		<InputMemo refLastMemo= {refLastMemo} listDom= {listDom} />

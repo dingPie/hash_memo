@@ -19,13 +19,15 @@ const ModalEditList = (props) => {
 
   // 수정함수:  dispatch와 modal off
   const editMemoList = () => {
-    // console.log(editValue.color)
+    let data = {id: editValue.id, hash: hashValue, content: contentValue, color: editValue.color}
     dispatch({
       type: 'editMemo',
       index: targetIndex,
-      data: {id: editValue.id, hash: hashValue, content: contentValue, color: editValue.color}
+      data: data
     })
-      setOnEditModal(false)
+    // 공지도 수정해주는 조건문
+    if (data.id === state.notice.id) dispatch({ type: 'setNotice', data: data })
+    setOnEditModal(false)
   }
   // 엔터키로 입력
   const PressEnter = (e) => {

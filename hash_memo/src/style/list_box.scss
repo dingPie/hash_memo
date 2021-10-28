@@ -1,4 +1,5 @@
 $deepBlue: #1f5afc;
+$boxShadow: 1px 1px 6px lightgray;
 
 .list-box {
     // position: relative;
@@ -8,8 +9,20 @@ $deepBlue: #1f5afc;
     // background: rgb(200, 225, 250);
 }
 
+@mixin hashForm {
+    max-width: 64px;
+    min-width: 60px;
+    padding: 3px;
+    text-align: center;
+    border-radius: 4px;
+    background: cornsilk;
+    overflow: hidden;
+    white-space: nowrap; // 이게 있어야 문자를 1줄로 쭉 보여줘서, ...처리가 된다.
+    text-overflow: ellipsis;
+}
 
 .list-memo {
+
     display: flex;
     flex-direction: column;
     padding: 4px;
@@ -22,22 +35,12 @@ $deepBlue: #1f5afc;
        
 
         .memo-hash {
+					@include hashForm;
             display: inline-block;
             align-self: flex-end;
             justify-self: flex-start;
-            max-width: 64px;
-            min-width: 60px;
-            height: 20px;
-            padding: 3px;
-            margin: 0 4px;
-            text-align: center;
-            line-height: 20px;
-            border-radius: 4px;
-            background: cornsilk;
-            overflow: hidden;
-            white-space: nowrap; // 이게 있어야 문자를 1줄로 쭉 보여줘서, ...처리가 된다.
-            text-overflow: ellipsis;
-            box-shadow: 1px 1px 6px lightgray;
+						margin: 8px 4px 0;
+            box-shadow: $boxShadow;
         }
 
         .memo-content {
@@ -46,7 +49,7 @@ $deepBlue: #1f5afc;
             border-radius: 4px;
             background: cornsilk;
             word-break: keep-all;
-            box-shadow: 1px 1px 6px lightgray;
+            box-shadow: $boxShadow;
 
             // 스크롤
             display: -webkit-box;
@@ -72,7 +75,7 @@ $deepBlue: #1f5afc;
     .option-modal {
         display: flex;
         align-self: flex-end;
-        margin-right: 24px;
+        margin: 4px 24px 0 0;
 
         span {
             background: $deepBlue;
@@ -159,6 +162,87 @@ $deepBlue: #1f5afc;
 }
 
 
+// notice, 알림창 (공지)
+.notice-box {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    z-index: 3;
+    width: 97.5%;
+		padding: 4px 0;
+    // height: 48px;
+    left: 0.1%;
+    background: $deepBlue;
+    opacity: 0.9;
+    margin: 6px 4px;
+    border-radius: 8px;
+    align-items: center;
+    
+    .notice-memo {
+        // background: black;
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: black;
+        
+        .notice-hash {
+            @include hashForm;
+            flex-grow: 2;
+						align-self: flex-start;
+            margin: 0 6px;
+						height: 24px;
+            box-shadow: $boxShadow;
+        }
+
+        .notice-content {
+            flex-grow: 8;
+            padding: 3px;
+            border-radius: 4px;
+            background: cornsilk;
+            word-break: keep-all;
+            box-shadow: $boxShadow;
+
+            // 스크롤
+            display: -webkit-box;
+            overflow-y: hidden;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            white-space: pre-wrap;
+        }
+        
+    }
+
+    .notice-btn-box {
+			align-self: flex-start;
+			min-width: 64px;
+			margin: 4px;
+			border-radius: 4px;
+			cursor: pointer;
+			// background: red;
+			
+			.notice-del-btn, .notice-exp-btn  {
+				display: inline-block;
+				margin: 0 2px;
+				width: 28px;
+				height: 28px;
+				line-height: 28px;
+				text-align: center;
+				color: $deepBlue;
+				font-weight: bold;
+				background: white;
+				border: 2px solid white;
+				border-radius: 28px;
+			}
+
+			// .notice-exp-btn {
+			// 	display: inline-block;
+			// 	width: 50%;
+			// }
+    }
+}
 
 
 @media screen and (min-width:768px) {

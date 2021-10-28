@@ -14,7 +14,6 @@ const ModalEditDetail = (props) => {
     modalRef.current.focus()
   }, [])
 
-  // if (!editValue.color) 
 	let modalMemoStyle = { // 좌표값이 매번 변하니, 변수로 지정
 		position: "absolute",
 		zIndex: 2,
@@ -31,16 +30,19 @@ const ModalEditDetail = (props) => {
   }
   
   const editMemoDetail = () => {
+    let data = {id: editValue.id, hash: editValue.hash, content: modalContent, color: editValue.color}
     if (modalContent === '') {
       if (window.confirm('정말 삭제하시겠습니까?')) {
-        dispatch({ type: 'deleteMemo', data: {id: editValue.id, hash: editValue.hash, content: modalContent} })
+        dispatch({ type: 'deleteMemo', data: data})
+        dispatch({ type: 'setNotice', data: '' }) // 삭제시, 공지도 같이 삭제해줌
       }
     } else {
       dispatch({
         type: 'editMemo',
         index: targetIndex, // 이걸 안 전해주면, 각 id는 length의 마지막 값이기 때문에, splice가 아닌 추가되는 모양으로 되는듯
-        data: {id: editValue.id, hash: editValue.hash, content: modalContent, color: editValue.color}
+        data: data
       })
+      if (data.id === state.notice.id) dispatch({ type: 'setNotice', data: data })
     }
   setOnEditMemo(false)
   }

@@ -13,11 +13,11 @@ import { combineReducers, createStore } from 'redux';
 // 초기값 실행
 if (!localStorage.getItem('local')) { 
   localStorage.setItem('local', JSON.stringify(Data))
-  localStorage.setItem('idCount', 11)
+  localStorage.setItem('idCount', 12)
 } 
 
 let jsonData = JSON.parse(localStorage.getItem('local')); // data에 넣을 변수
-let data = jsonData;
+// let data = jsonData;
 let idCount = localStorage.getItem('idCount');
 
 const saveAndLoad = (list) => {
@@ -34,8 +34,7 @@ const setColor = (state, hash) => {
   return value
 }
 
-const reducer = ( state = data, action) => { // 액션 함수.
-  let color;
+const reducer = ( state = jsonData, action) => { // 액션 함수.
 
   switch (action.type) {
     
@@ -66,22 +65,41 @@ const reducer = ( state = data, action) => { // 액션 함수.
         : { id: v.id, hash: v.hash, content: v.content, color: v.color } // 아니묜 그대로
       )
       saveAndLoad(changeColorList)
-      // console.log(action.targetHash)
-      // console.log(action.color)
-      // 보낸 컬러값, li 값 필요.
       // li와 같은 hash 값을 가진 데이터들을 찾음
       // 이런 애들 다 데이터에 style 지정 (기존 다른데이터는 유지하고, style 만 추가 or 변경하게 지정)
       // 이 데이터 값을 가져와서 style 지정할 애들 ex) detail페이지, list에 hash, grid페이지 등 지정
       return changeColorList
+    
       
     default:
       return state
   }
+}
 
+if (!localStorage.getItem('notice')) {
+  localStorage.setItem('notice', JSON.stringify(
+    { id: 10, hash: '개발계획', content: '공지는 추가중에 있으며, 임시 공지입니다.' }
+))}
+
+let noticeData = JSON.parse( localStorage.getItem('notice') )
+const notice = ( state = noticeData, action ) => {
+
+  switch (action.type) {
+
+    case 'setNotice':
+      let newNotice = action.data
+      localStorage.setItem('notice', JSON.stringify(newNotice) )
+      noticeData = JSON.parse( localStorage.getItem('notice') )
+      return newNotice
+    // ㅇㅋ 이거 저장하면 된다 이제!
+    
+    default:
+      return state
+  }
 }
 
 
-let store = createStore(combineReducers( {reducer} )) 
+let store = createStore(combineReducers( {reducer, notice} )) 
 
 ReactDOM.render(
   <React.StrictMode>
