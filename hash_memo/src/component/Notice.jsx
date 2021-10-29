@@ -10,27 +10,21 @@ const Notice = (props) => {
 
   const { setOnNotice } = props;
 
-  const protoStyle = {
-    position: 'absolute', zIndex: 3, width: '98%', height: '60px', left: '0.1%',
-    background: 'skyblue', opacity: 0.8, textAlign: 'center',
-    margin: '8px 4px 0 4px', borderRadius: '8px'
-  }
 
   const deleteNotice = () => {
+    if (window.confirm('공지를 삭제할까요?')) {
     setOnNotice(false)
     dispatch({
       type: 'setNotice',
       data: ''
     })
+    }
   }
 
   const changeLine = () => {
      memoLineClamp === 1 ? setMemoLineClamp(10) : setMemoLineClamp(1) 
   }
 
-
-  // 확대(크게보기) 기능 추가해야됨
-  // 최소화는 필요없을듯? 굳이?
 
   return (
     <div className="notice-box" >
@@ -40,7 +34,7 @@ const Notice = (props) => {
         {/* {
           state.notice.hash &&  */}
           <div className= 'notice-hash' style= {{ background: state.notice.color }} >
-            { state.notice.hash }
+            { !state.notice.hash ? '그 외' : state.notice.hash }
           </div>
         {/* } */}
 

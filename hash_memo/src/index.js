@@ -78,7 +78,7 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
 
 if (!localStorage.getItem('notice')) {
   localStorage.setItem('notice', JSON.stringify(
-    { id: 10, hash: '개발계획', content: '공지는 추가중에 있으며, 임시 공지입니다.' }
+    { id: 10, hash: '사용법', content: '공지기능은 한가지만 지정 가능하며, 클릭시 해당 자세히보기로 이동합니다.' }
 ))}
 
 let noticeData = JSON.parse( localStorage.getItem('notice') )

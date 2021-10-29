@@ -56,6 +56,9 @@ button {
     right: 4%;
     cursor: pointer;
 }
+.shift-btn:hover {
+    transform: scale(1.1)
+}
 
 
 // 하단 메뉴
@@ -127,16 +130,26 @@ button {
                 border-radius: 32px;
                 border: solid 2px $white;
             }
+            span:hover {
+                transform: scale(1.1);
+            }
         }
-        
+        .menu-color:hover{
+            transform: scale(1.05);
+        }
     }
 }
 
-
-
-
-
-
+.stretchUp-enter {
+    background: red;
+    transform-origin : bottom;
+    transform: scaleY(0.1);
+}
+.stretchUp-enter-active {
+    transform-origin : bottom;
+    transform: scaleY(1);
+    transition: 0.5s;
+}
 
 
 // /* 스마트폰 세로 */

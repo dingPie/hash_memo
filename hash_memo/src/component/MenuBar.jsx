@@ -1,5 +1,7 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { CSSTransition } from "react-transition-group";
+
 
 const MenuBar = (props) => {
   const state = useSelector(state => state)
@@ -8,6 +10,12 @@ const MenuBar = (props) => {
   const { hash } = props;
 
   const [onPaleteModal, setonPaleteModal] = useState(false)
+  const [transPalete, setTransPalete] = useState(false)
+
+  useEffect(() => {
+    console.log('실행돔')
+    setTransPalete(true)
+  }, [onPaleteModal])
   
   // 색상 코드값
   const colorSet = {
@@ -18,17 +26,15 @@ const MenuBar = (props) => {
     yellow: '#fff59d'
   }
   
-  const testOnPalete = (color) => {
-    if (!hash) { 
+  const onPalete = (color) => {
+    if (!hash) { //여기서hash는, Detail에서만 지정 가능한 params
     alert ('현재 상세페이지에서만 클릭이 가능하며, 태그가 없는 메모는 색상지정이 불가능합니다.')
     return // 현재 디테일에서만 클릭 가능한 상황
     } 
- 
     dispatch( { 
       type: 'changeColor',
       targetHash: hash,
       color: color, // 인자
-      // { type: 'addMemo', data: {hash: hash, content: modalContent} })
     })
     setonPaleteModal(!onPaleteModal)
     // 일단 누르면 dispatch로 redux 상태변경
@@ -38,14 +44,14 @@ const MenuBar = (props) => {
   }
 
 
-  const testPalete = () => {
+  const paleteBox = () => {
     return (
       <div className="color-palete">
-        <span className='color-none' style={{background: colorSet.cornsilk}} onClick= {() => testOnPalete(colorSet.cornsilk)} ></span>
-        <span className='color-red' style={{background: colorSet.red}} onClick= {() => testOnPalete(colorSet.red)} ></span>
-        <span className='color-blue' style={{background: colorSet.blue}} onClick= {() => testOnPalete(colorSet.blue)} >  </span>
-        <span className='color-green' style={{background: colorSet.green}} onClick= {() => testOnPalete(colorSet.green)} ></span>
-        <span className='color-yellow' style={{background: colorSet.yellow}} onClick= {() => testOnPalete(colorSet.yellow)} ></span>
+        <span className='color-none' style={{background: colorSet.cornsilk}} onClick= {() => onPalete(colorSet.cornsilk)} ></span>
+        <span className='color-red' style={{background: colorSet.red}} onClick= {() => onPalete(colorSet.red)} ></span>
+        <span className='color-blue' style={{background: colorSet.blue}} onClick= {() => onPalete(colorSet.blue)} >  </span>
+        <span className='color-green' style={{background: colorSet.green}} onClick= {() => onPalete(colorSet.green)} ></span>
+        <span className='color-yellow' style={{background: colorSet.yellow}} onClick= {() => onPalete(colorSet.yellow)} ></span>
       </div>
     )
   }
@@ -55,11 +61,13 @@ const MenuBar = (props) => {
 			
     <div className="menu-bar">
 
-      {
-        onPaleteModal && testPalete()
+      {onPaleteModal && 
+        <CSSTransition in= {transPalete} timeout= {500} classNames= 'stretchUp'>
+          {paleteBox()}
+        </CSSTransition>  
       }
 
-      <div className="menu-color" onClick={()=> setonPaleteModal(!onPaleteModal)}>
+      <div className="menu-color" onClick={()=> { setonPaleteModal(!onPaleteModal); setTransPalete(false); } }>
         <i class="fas fa-palette"></i>
       </div>
       <div className="menu-array">
