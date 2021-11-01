@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import '../style/list_box.scss'
+// import '../style/list_box.scss'
 
 const ModalEditList = (props) => {
   const state = useSelector(state => state);

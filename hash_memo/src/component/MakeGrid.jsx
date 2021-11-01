@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
 import '../style/grid_box.scss'
-import MakeDetail from "./MakeDetail";
+import MakeDetail from "./detail/MakeDetail";
 import MenuBar from "./MenuBar";
 
 const MakeGrid = () => {

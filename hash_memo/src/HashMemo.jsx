@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { Link, Route, Switch } from 'react-router-dom';
-import MakeMemo from "./component/MakeList";
+import MakeMemo from "./component/list/MakeList";
 import MakeGrid from "./component/MakeGrid";
-import MakeDetail from "./component/MakeDetail";
+import MakeDetail from "./component/detail/MakeDetail";
 import './style/main.scss'
 
 const HashMemo = () => {

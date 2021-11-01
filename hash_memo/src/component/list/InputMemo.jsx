@@ -7,6 +7,7 @@ const InputMemo = (props) => {
   const dispatch = useDispatch() // redux의 액션 함수를 실행시킬 수 있음
 
   const [inputMemo, setInputMemo] = useState('')
+  const [onInputOption, setOnInputOption] = useState(false)
 
 
   const addMemo = () => {
@@ -29,14 +30,23 @@ const InputMemo = (props) => {
     if (e.key === 'Enter') addMemo()
   }
 
-  
+  let testStyle = { position: 'absolute', width: '30px', height: '120px',background: 'skyblue',left: '2.5%', bottom: '8%' }
+  const testBox = () => {
+    return (
+      <div style={testStyle}>
+        <div className="list-delete"> 삭제버튼 예정 </div>
+        
+      </div>
+      )
+  }
 
     return (
       <div className= 'bottom-box'>
-        <button className= 'other-btn'> ? </button>
+        { onInputOption && testBox() }
+        <button className= 'other-btn' onClick={() => setOnInputOption(!onInputOption)}> ? </button>
 
         <textarea className= 'input-text'
-          value= { inputMemo }
+          value= { inputMemo } placeholder= '내용 #제목 을 입력하세요'
           onChange= { (e) => setInputMemo(e.target.value) }
           onKeyPress= { (e) => PressEnter(e) }
         />

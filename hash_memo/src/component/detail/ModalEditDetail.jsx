@@ -25,8 +25,12 @@ const ModalEditDetail = (props) => {
 		height: modalPosition[3],
 	};
 
-  const btnPositon = { // 수정버튼 포지션
-    position: 'absolute', zIndex: 3, display: 'inline-block', top:  modalPosition[1] + modalPosition[3] + 6, left: '43%'
+  let btnPositon = { // 수정버튼 포지션
+    position: 'absolute',
+    zIndex: 3,
+    display: 'inline-block',
+    top:  modalPosition[1] + modalPosition[3] + 6,
+    left: '43%'
   }
   
   const editMemoDetail = () => {

@@ -6,7 +6,7 @@ import Notice from "./Notice";
 import { CSSTransition } from "react-transition-group";
 
 import ModalEditList from './ModalEditList'
-import '../style/list_box.scss'
+import '../../style/list_box.scss'
 
 
 const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 함수.

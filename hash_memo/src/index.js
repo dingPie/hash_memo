@@ -42,7 +42,10 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
       idCount++
       localStorage.setItem('idCount', idCount)
       
-      let addMemeList = [...state, {id: idCount, hash: action.data.hash, content: action.data.content, color: setColor(state, action.data.hash).color }] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
+      let hashValue = action.data.hash;
+      if (hashValue) if (hashValue.includes('\/')) hashValue = hashValue.replace(/\//g, ", " ) // 정규표현식으로 슬래시를 ,으로 바꿔줌
+      if (hashValue === '') hashValue = undefined // 빈 값이면 undefined 처리
+      let addMemeList = [...state, {id: idCount, hash: hashValue, content: action.data.content, color: setColor(state, action.data.hash).color }] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
       saveAndLoad(addMemeList)
       return addMemeList // 위에서 jsonData 가져와서, 사실 이거 안해줘도 댐
 
@@ -57,6 +60,15 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
       editMemoList.splice(action.index, 1, data) // 복사한 값에서 수정한 값 넣어주고
       saveAndLoad(editMemoList)
       return editMemoList
+
+    case 'editHash':
+      let editHashList = state.map( v => 
+        v.hash === action.targetHash
+        ? { id: v.id, hash: action.newHash, content: v.content, color: v.color } // 스타일 지정해주고
+        : { id: v.id, hash: v.hash, content: v.content, color: v.color } // 아니묜 그대로
+      )
+      saveAndLoad(editHashList)
+      return editHashList
 
     case 'changeColor':
       let changeColorList = state.map( v => 
