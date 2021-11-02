@@ -38,6 +38,7 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
 
   switch (action.type) {
     
+    // list, detail에서 메모 추가
     case 'addMemo':
       idCount++
       localStorage.setItem('idCount', idCount)
@@ -49,11 +50,13 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
       saveAndLoad(addMemeList)
       return addMemeList // 위에서 jsonData 가져와서, 사실 이거 안해줘도 댐
 
+    //list, detail에서 메모 제거
     case 'deleteMemo':
       let deleteMemoList = state.filter( v => v.id !== action.data.id ) // 없앨 값만 빠진 리스트 구성  | && v.content !== action.data.content 이거 붙이면 안됨.
       saveAndLoad(deleteMemoList)
       return deleteMemoList
 
+    // list, detail에서 메모자체 수정
     case 'editMemo':
       let data = { id: action.data.id, hash: action.data.hash, content: action.data.content, color: setColor(state, action.data.hash).color }
       let editMemoList = state; // 값 복사
@@ -61,6 +64,7 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
       saveAndLoad(editMemoList)
       return editMemoList
 
+    // detail에서 hash 수정
     case 'editHash':
       let editHashList = state.map( v => 
         v.hash === action.targetHash
@@ -70,6 +74,7 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
       saveAndLoad(editHashList)
       return editHashList
 
+    // 색상변경
     case 'changeColor':
       let changeColorList = state.map( v => 
         v.hash === action.targetHash // 해당 targethash와 동일한 경우에만,
@@ -82,7 +87,12 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
       // 이 데이터 값을 가져와서 style 지정할 애들 ex) detail페이지, list에 hash, grid페이지 등 지정
       return changeColorList
     
-      
+    // list에서 여러개 삭제
+    case 'deleteLists':
+      let deleteLists = state.filter( v => !action.data.includes(v) ) // data list에 없는애들로만 재구성 (data에 있는 놈들은 삭제해준다.)
+      saveAndLoad(deleteLists)
+      return deleteLists
+
     default:
       return state
   }

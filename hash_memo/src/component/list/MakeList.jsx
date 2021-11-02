@@ -7,6 +7,7 @@ import { CSSTransition } from "react-transition-group";
 
 import ModalEditList from './ModalEditList'
 import '../../style/list_box.scss'
+import OptionModal from "./OptionModal";
 
 
 const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 함수.
@@ -21,35 +22,11 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 
 	const [onNotice, setOnNotice] = useState(true) // notice 모달창 관리
 
+	const [onCheckbox, setOnCheckbox] = useState(false) // 체크박스 on / off
+	const [checkedValues, setCheckedValues] = useState([]) // 체크된 값들 저장
 
 	const refLastMemo = useRef() // 마지막 메모의 DOM 지정을 위한 Ref
 	const listDom = useRef() // listBox 자체 지정
-
-	// 메모 삭제
-	const deleteMemoList = (id, hash, content) => { //왜 이렇게 인자를 다 따로 빼줘야 될까?
-		if (window.confirm('정말 삭제하시겠습니까?')) {
-			dispatch({ type: 'deleteMemo', data: {id: id, hash: hash, content: content } })
-			dispatch({ type: 'setNotice', data: '' }) // 공지도 삭제해주는 함수
-		}
-	}
-
-	// 수정용 modal창을 열고, 해당 값을 전달해주는 함수.
-	const openEditModal = (id, hash, content) => {
-		// 클릭한 내용의 id랑 content로 찾아서, 컴포넌트로 전달해준다.
-		let target= state.reducer.filter( value => value.id === id && value.content === content )[0]
-		setEditValue(target)
-		setOnEditModal(true)
-	}
-
-	// notice를 추가해주는 함수. 
-	const settingNotice = (value) => {
-		setOnNotice(true)
-		dispatch({
-			type: 'setNotice',
-			data: value
-		})
-		setOnOptionModal('')
-	}
 
 
   // 메세지 추가시 마지막 메모 focus
@@ -58,6 +35,15 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
     let posY = refLastMemo.current.offsetTop;
     listDom.current.scroll(({ top: posY, left: 0, behavior: 'auto' }))
   }
+
+	const checkEvent = (e, value) => {
+		if(e.target.checked) { // true로 체크 할 때 추가
+			setCheckedValues([...checkedValues, value])
+		} else { // false로 체크할땐 제거 
+			let deleteValue = checkedValues.filter(v => v !== value) 
+			setCheckedValues(deleteValue)
+		}
+	}
 
 	// 자동으로 optionModal을 닫아주기 위한 Effect. delete시에는 통째로 사라지므로 안해줘도된다
 	useEffect(() => { 
@@ -77,8 +63,15 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 	let listMemo = state.reducer.map( (v, i, a) =>  // reducer의 state를 이용하는 함수
 
 		<div className= 'list-memo' ref= { i === a.length - 1 ? refLastMemo : null } > {/* 마지막 list에만 ref를 지정 */}
-
-			<div className= 'list-main'>
+		
+			 <div className= 'list-main'>
+	
+				{ onCheckbox &&
+					<input className="option-checkbox" type="checkbox" id={i}
+						onClick= { (e)=> checkEvent(e, v) }
+					/>
+				}
+	
 				{ v.hash &&
 				<span className= 'memo-hash' style= {{background: v.color}}> {v.hash} </span>
 				} 
@@ -94,27 +87,14 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 				</span> 
 			</div>
 
-			{ // 확장 눌렀을 때만 나오는 추가메뉴들
-				v.id === onOptionModal  // 클릭한 메세지의 id값과 optionModal의 id를 비교하여, 하나의 modal만 띄워준다.
-				?	<CSSTransition in= {transOption} timeout= {700} classNames= 'downSlide'>{/* 애니메이션 효과. 이렇게 넣으면 되는데, 지금은 테스트용임. */}
-					<div className= 'option-modal'>
-
-						<span className= 'del-btn'onClick= { () => deleteMemoList(v.id, v.hash, v.content) }>
-							<i class="fas fa-trash"></i>
-						</span> 
-
-						<span className= 'edit-btn' onClick= { () => openEditModal(v.id, v.hash, v.content) }>
-							<i class="far fa-edit"></i>
-						</span>
-						
-						<span className='exp-btn' onClick= {() => v.id === expandMemo ? setExpandMemo('') : setExpandMemo(v.id)}>
-							<i class="fas fa-arrows-alt-v"></i>
-						</span> {/* 더보기 눌렀을 때, 하나만 확장하도록 id 비교 */}
-						
-						<span className="on-notice-btn" onClick= {() => settingNotice(v)}>
-							<i class="fas fa-thumbtack"></i>
-						</span>
-					</div>
+			{	v.id === onOptionModal
+				? <CSSTransition in= {transOption} timeout= {700} classNames= 'downSlide'>
+						<OptionModal
+						  setEditValue= {setEditValue} setOnEditModal= {setOnEditModal} 
+							setOnNotice= {setOnNotice} setOnOptionModal= {setOnOptionModal}
+							setExpandMemo= {setExpandMemo} expandMemo= {expandMemo}
+							value ={v} checkedValues= {checkedValues} setCheckedValues = {setCheckedValues}
+						/>
 					</CSSTransition>
 				: null
 			}
@@ -141,8 +121,8 @@ const MakeMemo = (props) => { // 값들을 반복문 형태로 추가해주는 �
 			}
 		</div>
 
-		<InputMemo refLastMemo= {refLastMemo} listDom= {listDom} />
-	
+		<InputMemo setOnCheckbox= {setOnCheckbox} onCheckbox= {onCheckbox} checkedValues= {checkedValues} setCheckedValues= {setCheckedValues} />
+	{/* refLastMemo= {refLastMemo} listDom= {listDom} 이거 없어도, 현재 List에서 useEffect로 처리하기떄문에 잘됨 */}
 	</>
 	)
 

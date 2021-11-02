@@ -24,7 +24,7 @@ $boxShadow: 1px 1px 6px lightgray;
 .list-memo {
 
     display: flex;
-    flex-direction: column;
+    flex-direction: column; // 이게 있어야 옵션 아래 가능
     padding: 4px;
     margin: 0 ;
     width: 80%;
@@ -32,14 +32,17 @@ $boxShadow: 1px 1px 6px lightgray;
     .list-main {
         display: flex;
         justify-content: flex-end;
-       
+
+        .option-checkbox {
+            margin-right: auto;
+        }
 
         .memo-hash {
-					@include hashForm;
+            @include hashForm;
             display: inline-block;
             align-self: flex-end;
             justify-self: flex-start;
-						margin: 8px 4px 0;
+            margin: 8px 4px 0;
             box-shadow: $boxShadow;
         }
 
@@ -183,7 +186,7 @@ $boxShadow: 1px 1px 6px lightgray;
     justify-content: space-between;
     z-index: 3;
     width: 97.5%;
-		padding: 4px 0;
+    padding: 4px 0;
     // height: 48px;
     left: 0.1%;
     background: $deepBlue;

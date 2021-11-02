@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CSSTransition } from "react-transition-group";
+import { useHistory } from "react-router";
 
 
 const MenuBar = (props) => {
   const state = useSelector(state => state)
   const dispatch = useDispatch()
-
+  const history = useHistory();
   const { hash } = props;
 
   const [onPaleteModal, setonPaleteModal] = useState(false)
   const [transPalete, setTransPalete] = useState(false)
+  const [deleteTarget, setDeleteTarget] = useState([])
 
   useEffect(() => {
     console.log('실행돔')
@@ -27,10 +29,9 @@ const MenuBar = (props) => {
   }
   
   const onPalete = (color) => {
-    if (!hash) { //여기서hash는, Detail에서만 지정 가능한 params
-    alert ('현재 상세페이지에서만 클릭이 가능하며, 태그가 없는 메모는 색상지정이 불가능합니다.')
-    return // 현재 디테일에서만 클릭 가능한 상황
-    } 
+    // gridPage에선 return
+    if (!hash) alert ('현재 상세페이지에서만 클릭이 가능하며, 태그가 없는 메모는 색상지정이 불가능합니다.')
+   
     dispatch( { 
       type: 'changeColor',
       targetHash: hash,
@@ -41,6 +42,16 @@ const MenuBar = (props) => {
     // 같은 값들은 다 변경ㅇㅇ
     // 새로 추가한 값도 만약 색깔 적용되어 있으면, 그 색깔 따라가도록 ( 그럼 색상값을 확인하는 함수를 적용해야겠네?)
     // indexOf(hash) 해서 !== -1 이면, 그 값의 color 값을 가져오도록 설계.
+  }
+
+
+  const deleteList = () => {
+    if (!hash) alert ('현재 상세페이지에서만 클릭이 가능합니다')
+    if (window.confirm('정말 이 메모를 삭제할까요?')) {
+      let deleteDetail = state.reducer.filter(v => v.hash === hash)
+      dispatch({ type: 'deleteLists', data: deleteDetail })
+      history.push('/')
+    }
   }
 
 
@@ -70,13 +81,16 @@ const MenuBar = (props) => {
       <div className="menu-color" onClick={()=> { setonPaleteModal(!onPaleteModal); setTransPalete(false); } }>
         <i class="fas fa-palette"></i>
       </div>
-      <div className="menu-array">
-        <i class="fas fa-sort-amount-up"></i>
+
+      <div className="menu-array" onClick= {() => deleteList()} >
+        <i class="fas fa-trash"></i>
       </div>
+
       <div className="menu-search">
          {/* 해당문구 background처리, 해당 문자로 ref지정, scroll 지정 */}
          <i class="fas fa-search"></i>
       </div>
+
       <div className="menu-popup">
         <i class="far fa-caret-square-up"></i>
       </div>

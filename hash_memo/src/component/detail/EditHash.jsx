@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 
 const EditHash = (props) => {
   const state = useSelector(state => state)
   const dispatch = useDispatch()
+  const history = useHistory()
   
   let { hash, modalPosition, modalContent, setModalContent, setOnEditHash } = props;
   let editValue = state.reducer.filter( value => value.hash === hash )[0]
@@ -42,28 +44,28 @@ const EditHash = (props) => {
       newHash: modalContent
     });
     setOnEditHash(false)
+    history.push(`${modalContent}`)
   }
-  // 현재 버튼에만 링크가 달려있기때문에, Enter시 제대로 된 이동이 안된다.
-  // const PressEnter = (e) => {
-  //   if (e.key === 'Enter' && e.shiftKey) return 
-  //   if (e.key === 'Enter') addMemoDetail()
-  // }
+
+  const PressEnter = (e) => {
+    if (e.key === 'Enter' && e.shiftKey) return 
+    if (e.key === 'Enter') addMemoDetail()
+  }
 
 
 
   return (
     <div>
       
-      <textarea  className= 'detail-hash' style= {modalMemoStyle}
-       value= {modalContent}
-       onChange= { (e) => setModalContent(e.target.value)}
-      ></textarea>
+      <input type="text" className= 'detail-hash' style= {modalMemoStyle}
+        value= {modalContent}
+        onChange= { (e) => setModalContent(e.target.value)}
+        onKeyPress= {(e) => PressEnter(e)}
+      />
 
-      <Link to= {'/detail/' + modalContent }> {/* 버튼 자체에 라우터를 달아서, 바뀐 페이지로 바로 이동시켜줌 */}
         <button className= 'detail-edit-btn' style= {btnPositon}
           onClick= {() => addMemoDetail()}
         > 변경 </button>
-      </Link>
 
     </div>
   )
