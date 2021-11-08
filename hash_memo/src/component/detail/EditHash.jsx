@@ -6,12 +6,14 @@ import { Link } from "react-router-dom";
 const EditHash = (props) => {
   const state = useSelector(state => state)
   const dispatch = useDispatch()
+  const ref = useRef()
   const history = useHistory()
   
   let { hash, modalPosition, modalContent, setModalContent, setOnEditHash } = props;
   let editValue = state.reducer.filter( value => value.hash === hash )[0]
 
   useEffect(() => {
+    ref.current.focus()
     setModalContent(hash)
   }, [])
 
@@ -57,7 +59,7 @@ const EditHash = (props) => {
   return (
     <div>
       
-      <input type="text" className= 'detail-hash' style= {modalMemoStyle}
+      <input type="text" className= 'detail-hash' style= {modalMemoStyle} ref ={ref}
         value= {modalContent}
         onChange= { (e) => setModalContent(e.target.value)}
         onKeyPress= {(e) => PressEnter(e)}

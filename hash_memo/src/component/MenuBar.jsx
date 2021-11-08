@@ -15,7 +15,6 @@ const MenuBar = (props) => {
   const [deleteTarget, setDeleteTarget] = useState([])
 
   useEffect(() => {
-    console.log('실행돔')
     setTransPalete(true)
   }, [onPaleteModal])
   
@@ -30,25 +29,27 @@ const MenuBar = (props) => {
   
   const onPalete = (color) => {
     // gridPage에선 return
-    if (!hash) alert ('현재 상세페이지에서만 클릭이 가능하며, 태그가 없는 메모는 색상지정이 불가능합니다.')
-   
+    if (!hash) {
+      alert ('현재 상세페이지에서만 클릭이 가능하며, 태그가 없는 메모는 색상지정이 불가능합니다.')
+      return
+      }
     dispatch( { 
       type: 'changeColor',
       targetHash: hash,
       color: color, // 인자
     })
     setonPaleteModal(!onPaleteModal)
-    // 일단 누르면 dispatch로 redux 상태변경
-    // 같은 값들은 다 변경ㅇㅇ
-    // 새로 추가한 값도 만약 색깔 적용되어 있으면, 그 색깔 따라가도록 ( 그럼 색상값을 확인하는 함수를 적용해야겠네?)
-    // indexOf(hash) 해서 !== -1 이면, 그 값의 color 값을 가져오도록 설계.
   }
 
 
   const deleteList = () => {
-    if (!hash) alert ('현재 상세페이지에서만 클릭이 가능합니다')
-    if (window.confirm('정말 이 메모를 삭제할까요?')) {
+    if (!hash) {
+      alert ('현재 상세페이지에서만 클릭이 가능합니다')
+      return
+    }
+      if (window.confirm('정말 이 메모를 삭제할까요?')) {
       let deleteDetail = state.reducer.filter(v => v.hash === hash)
+      console.log(deleteDetail)
       dispatch({ type: 'deleteLists', data: deleteDetail })
       history.push('/')
     }

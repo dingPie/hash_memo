@@ -71,7 +71,9 @@ const InputMemo = (props) => {
         />
         
         {/* 메모 추가버튼 */}
-        <button className= 'add-btn' onClick= { () => addMemo() }> <i class="fas fa-plus-circle"></i> </button>
+        <button className= 'add-btn' onClick= { () => addMemo() }>
+          <i class="fas fa-plus-circle"></i>
+        </button>
       
        {/* 리스트 삭제모드용 UI */}
         { onDeleteMode &&

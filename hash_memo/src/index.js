@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import HashMemo from './HashMemo';
-import Data from './Data.jsx'
+// import Data from './Data.jsx'
 
 import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
@@ -40,9 +40,8 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
     
     // list, detail에서 메모 추가
     case 'addMemo':
-      idCount++
+      idCount++ // id 값 지정
       localStorage.setItem('idCount', idCount)
-      
       let hashValue = action.data.hash;
       if (hashValue) if (hashValue.includes('\/')) hashValue = hashValue.replace(/\//g, ", " ) // 정규표현식으로 슬래시를 ,으로 바꿔줌
       if (hashValue === '') hashValue = undefined // 빈 값이면 undefined 처리
@@ -82,14 +81,11 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
         : { id: v.id, hash: v.hash, content: v.content, color: v.color } // 아니묜 그대로
       )
       saveAndLoad(changeColorList)
-      // li와 같은 hash 값을 가진 데이터들을 찾음
-      // 이런 애들 다 데이터에 style 지정 (기존 다른데이터는 유지하고, style 만 추가 or 변경하게 지정)
-      // 이 데이터 값을 가져와서 style 지정할 애들 ex) detail페이지, list에 hash, grid페이지 등 지정
       return changeColorList
     
     // list에서 여러개 삭제
     case 'deleteLists':
-      let deleteLists = state.filter( v => !action.data.includes(v) ) // data list에 없는애들로만 재구성 (data에 있는 놈들은 삭제해준다.)
+      let deleteLists = state.filter( v => !action.data.includes(v) ) // 받아온 dataArray를 제거
       saveAndLoad(deleteLists)
       return deleteLists
 
@@ -97,6 +93,8 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
       return state
   }
 }
+
+
 
 if (!localStorage.getItem('notice')) {
   localStorage.setItem('notice', JSON.stringify(
@@ -119,6 +117,7 @@ const notice = ( state = noticeData, action ) => {
       return state
   }
 }
+
 
 
 let store = createStore(combineReducers( {reducer, notice} )) 
