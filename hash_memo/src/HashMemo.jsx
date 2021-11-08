@@ -29,7 +29,7 @@ const HashMemo = () => {
 
  {/* Switch로 감싸주자. */}
       <Route exact path= '/' >
-        { mode === 'list' && <MakeMemo /> } {/* 현재는 둘다 Redux로 접근하기에, props를 넘겨줄게 없다. 개꿀 */}
+        { mode === 'list' && <MakeMemo /> }
         { mode === 'grid' && <MakeGrid /> }
       </Route>
 

@@ -13,16 +13,13 @@ import { combineReducers, createStore } from 'redux';
 // 초기값 실행
 if (!localStorage.getItem('local')) { 
   localStorage.setItem('local', JSON.stringify(Data))
-  localStorage.setItem('idCount', 12)
 } 
 
 let jsonData = JSON.parse(localStorage.getItem('local')); // data에 넣을 변수
 // let data = jsonData;
-let idCount = localStorage.getItem('idCount');
 
 const saveAndLoad = (list) => {
   localStorage.setItem('local', JSON.stringify(list)) //새로 업데이트 한 값을 저장해주고
-  jsonData = JSON.parse(localStorage.getItem('local')) // 파싱한 값들을 위에 data 값에 넣어주는 작업.
 }
 
 const setColor = (state, hash) => {
@@ -40,12 +37,10 @@ const reducer = ( state = jsonData, action) => { // 액션 함수.
     
     // list, detail에서 메모 추가
     case 'addMemo':
-      idCount++ // id 값 지정
-      localStorage.setItem('idCount', idCount)
       let hashValue = action.data.hash;
       if (hashValue) if (hashValue.includes('\/')) hashValue = hashValue.replace(/\//g, ", " ) // 정규표현식으로 슬래시를 ,으로 바꿔줌
       if (hashValue === '') hashValue = undefined // 빈 값이면 undefined 처리
-      let addMemeList = [...state, {id: idCount, hash: hashValue, content: action.data.content, color: setColor(state, action.data.hash).color }] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
+      let addMemeList = [...state, {id: Date.now(), hash: hashValue, content: action.data.content, color: setColor(state, action.data.hash).color }] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
       saveAndLoad(addMemeList)
       return addMemeList // 위에서 jsonData 가져와서, 사실 이거 안해줘도 댐
 
