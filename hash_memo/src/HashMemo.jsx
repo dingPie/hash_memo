@@ -17,8 +17,15 @@ const HashMemo = () => {
     : (setMode('list'), setIcon( <i class="fas fa-th-large"></i> ) )
   }
 
-  return (
-    <div className= 'main-box'>
+  const backgroundImg = {
+    // backgroundColor: '#ffcdd2',
+    backgroundImage: "url('https://images.unsplash.com/photo-1519972064555-542444e71b54?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80')",
+    // backgroundSize: 'contain',
+    backgroundBlendMode: 'color',
+  }
+
+  return ( 
+    <div className= 'main-box' style= {backgroundImg}>
       
       <div className="nav-bar">
         <h1># Memo</h1>
@@ -34,7 +41,7 @@ const HashMemo = () => {
       </Route>
 
       <Route path= '/detail/:hash'>
-        <MakeDetail />
+        <MakeDetail mode= {mode}/>
       </Route>
 
     </div>

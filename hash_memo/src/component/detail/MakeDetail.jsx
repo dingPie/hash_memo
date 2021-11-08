@@ -12,6 +12,9 @@ import EditHash from "./EditHash";
 const MakeDetail = (props) => {
 	const state = useSelector(state => state)
 	const dispatch = useDispatch()
+
+	const { mode } = props;
+
 	let { hash } = useParams();
 	if (hash === 'undefined') { // params가 'undefined'일때, string으로 받아온 값을 찐 undefined로 변환해줌
 		hash = undefined
@@ -30,9 +33,14 @@ const MakeDetail = (props) => {
 	const editMomoDetail = (e) => {
 		if (onAddMemo) setOnAddMemo(false)
 		if (onEditHash) setOnEditHash(false)
+		console.log( '페이지',e.pageY)
+		console.log('클라이언트', e.clientY)
+		// console.log('오프셋', e.target.offsetTop)
+		// console.log(e.)
 		setEditTarget(e.target) // 타겟자체, 하위 컴포넌트에 전달용
 		setModalContent(e.target.innerText) // 안에 컨텐츠 변경용
-		setModalPosition([e.target.offsetLeft, e.target.offsetTop, e.target.offsetWidth, e.target.offsetHeight]) // 모달창 위치
+		setModalPosition([e.target.offsetLeft, e.pageY - 24, e.target.offsetWidth, e.target.offsetHeight]) // pageY로 바꿔서, 인터페이스 내부위치 적용완료.
+		// setModalPosition([e.target.offsetLeft, e.target.offsetTop, e.target.offsetWidth, e.target.offsetHeight]) // 모달창 위치
 		setOnEditMemo(!onEditMemo) // on/off
 	}
 
@@ -41,8 +49,9 @@ const MakeDetail = (props) => {
 		if (onEditMemo)	setOnEditMemo(false)
 		if (onEditHash) setOnEditHash(false)
 		let addPosition = refDetail.current.offsetTop // 현재 추가 버튼이 위치한, 가장 아래에 박스를 추가
+		console.log(refDetail.current.e)
 		setModalContent('') // 이건 비워주고 (아니면 수정했었던 값이 그대로 온다.)
-		setModalPosition([10, addPosition, '94.5%', 48]) // 임의로 지정해놓은 사이즈
+		setModalPosition([30, addPosition, '95%', 48]) // 임의로 지정해놓은 사이즈
 		setOnAddMemo(!onAddMemo) // on / off
 	}
 
@@ -51,7 +60,6 @@ const MakeDetail = (props) => {
 		if (onEditMemo)	setOnEditMemo(false)
 		if (onAddMemo) setOnAddMemo(false)
 		setModalContent(hash)
-		// console.log(e.target)
 		setModalPosition([e.target.offsetLeft, e.target.offsetTop, e.target.offsetWidth, e.target.offsetHeight])
 		setOnEditHash(!onEditHash)
 	}
@@ -80,15 +88,14 @@ const MakeDetail = (props) => {
 				{/* 이거,z-index가 높아서, 기존 전환키 위에 덮힌다ㅋㅋㅋㅋㅋ */}
 			</Link>
 
-			<div className= "detail-box"  style= {{ background: setColor().color }} > 
+<div className="detail-box">
+			<div className= "detail-memo"  style= {{ background: setColor().color }} > 
 
 				<span className= 'detail-hash' onClick= {(e) => editHashDetail(e) }>
 					# {hash !== undefined ? hash : '그 외'}
 				</span>
 
-				<div className="detail-memo">
 					{detailMemo}
-				</div>
 
 				{ onEditHash &&
 					<EditHash 
@@ -121,8 +128,8 @@ const MakeDetail = (props) => {
 				}
 
 			</div>
-
-			<MenuBar hash= {hash} />
+			</div>
+			<MenuBar hash= {hash} mode= {mode} />
 
 		</>
 	)

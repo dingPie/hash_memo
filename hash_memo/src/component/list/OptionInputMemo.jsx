@@ -4,9 +4,8 @@ const OptionInputMemo = (props) => {
 
 const{ setOnCheckbox, setOnDeleteMode, setOnInputOption } = props; // list -> input -> 여기
 
-  let testStyle = {  }
 
- const testFunc =() => {
+ const onClick =() => {
   setOnDeleteMode(true)
   setOnCheckbox(true)
   setOnInputOption(false)
@@ -14,11 +13,11 @@ const{ setOnCheckbox, setOnDeleteMode, setOnInputOption } = props; // list -> in
 
 
     return (
-      <div className= 'input-option-modal' style={testStyle} >
+      <div className= 'input-option-modal' >
          
-        <div className="list-delete">
-          <i class="fas fa-trash" onClick= {() => testFunc()} ></i> 
-        </div>
+        <button className="list-delete">
+          <i class="fas fa-trash" onClick= {() => onClick()} ></i> 
+        </button>
 
       </div>
       )

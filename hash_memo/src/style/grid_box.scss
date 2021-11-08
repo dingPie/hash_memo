@@ -1,4 +1,4 @@
-$boxShadow: 1px 1px 6px lightgray;
+$boxShadow: 1px 1px 4px rgb(100, 99, 99);
 
 li {
     list-style: none;
@@ -8,8 +8,8 @@ li {
     display: flex;
     align-items: flex-start;
     justify-self: center;
-    width: 100%;
-    margin: 8px auto;
+    // width: 97%;
+    // margin: 8px auto;
     // padding: 4px
     // max-width: 767px;
 
@@ -17,6 +17,7 @@ li {
 .grid-memo {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    margin: 8px 4px;
     // flex-wrap: wrap;
     // justify-content: center;
     
@@ -32,7 +33,7 @@ li {
     height: 180px;
     background: cornsilk;
     border-radius: 8px;
-    overflow: hidden;
+    overflow:hidden;
     text-decoration: none;
     box-shadow: $boxShadow;
     
@@ -43,7 +44,7 @@ li {
     li {
         width: 95%;
         max-height: 45px;
-        margin: 4px 4px;
+        margin: 6px;
         padding-bottom: 4px;
         border-bottom: 1px solid darkgray;
         overflow: hidden;

@@ -79,7 +79,7 @@ const InputMemo = (props) => {
         { onDeleteMode &&
           <div className=" bottom-del-box">
             <button className="cancel-btn" onClick= {() => cancelDelMode()}> ✖ </button>
-            <div className="do-btn" onClick= {() => deleteLists()} > 삭제 </div>
+            <button className="do-btn" onClick= {() => deleteLists()} > 삭제 </button>
           </div>
         }
         

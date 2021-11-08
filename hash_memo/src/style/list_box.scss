@@ -1,5 +1,5 @@
-$deepBlue: #1f5afc;
-$boxShadow: 1px 1px 6px lightgray;
+$deepBlue: rgb(71, 71, 71);;
+$boxShadow: 1px 1px 4px rgb(99, 99, 99);
 
 .list-box {
     // position: relative;
@@ -20,14 +20,39 @@ $boxShadow: 1px 1px 6px lightgray;
     white-space: nowrap; // 이게 있어야 문자를 1줄로 쭉 보여줘서, ...처리가 된다.
     text-overflow: ellipsis;
 }
+@mixin scrollHidden {
+    display: -webkit-box;
+    overflow-y: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+}
+@mixin fixedCenter {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+@mixin modal_border {
+    align-self: center;
+    border-width: 2px;
+    border-radius: 3px;
+    border-color: $deepBlue;
+}
+
+
 
 .list-memo {
-
     display: flex;
     flex-direction: column; // 이게 있어야 옵션 아래 가능
     padding: 4px;
     margin: 0 ;
-    width: 80%;
+    width: 90%;
 
     .list-main {
         display: flex;
@@ -53,19 +78,11 @@ $boxShadow: 1px 1px 6px lightgray;
             background: cornsilk;
             word-break: keep-all;
             box-shadow: $boxShadow;
-
-            // 스크롤
-            display: -webkit-box;
-            overflow-y: hidden;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            text-overflow: ellipsis;
-            white-space: pre-wrap;
+            @include scrollHidden();
         }
         .clicked { // 클릭시 길이 바꾸는 기능 넣자
             -webkit-line-clamp: 10;
         }
-
             
         .option-btn {
             cursor: pointer;
@@ -73,7 +90,6 @@ $boxShadow: 1px 1px 6px lightgray;
             margin: 0 4px;
             color: $deepBlue;
         }
-
     
 }
     .option-modal {
@@ -96,6 +112,7 @@ $boxShadow: 1px 1px 6px lightgray;
             transform: scale(1.1);
         }
     }
+
 }
 
 // CSSTransiton 적용 css
@@ -111,24 +128,8 @@ $boxShadow: 1px 1px 6px lightgray;
     transition-timing-function: cubic-bezier(.27,1.08,.48,.92) ;
 }
 
-    @mixin modal_border {
-        align-self: center;
-        border-width: 2px;
-        border-radius: 3px;
-        border-color: $deepBlue;
-    }
-
 .list-edit-modal-box {
-    // 중앙정렬 속성
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-
+    @include fixedCenter();
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -138,29 +139,30 @@ $boxShadow: 1px 1px 6px lightgray;
     border: 8px  $deepBlue solid;
     border-radius: 12px;
 
-
-
     .edit-modal-x {
         position: absolute;
         right: 5%;
-        // top: 5%
         text-align: end;
         cursor: pointer;
     }
+
     span {
         width: 64px;
         height: 28px;
         margin: 10px 0 4px 24px;
     }
+
     .edit-modal-hash {
         width: 85%;
         @include modal_border;
     }
+
     .edit-modal-content {
         width: 85%;
         height: 80px;
         @include modal_border;
     }
+
     .edit-modal-content::-webkit-scrollbar {
         width: 4px;
     }    
@@ -220,13 +222,7 @@ $boxShadow: 1px 1px 6px lightgray;
             background: cornsilk;
             word-break: keep-all;
             box-shadow: $boxShadow;
-            // 스크롤
-            display: -webkit-box;
-            overflow-y: hidden;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            text-overflow: ellipsis;
-            white-space: pre-wrap;
+            @include scrollHidden();
         }
     }
 
@@ -235,7 +231,6 @@ $boxShadow: 1px 1px 6px lightgray;
 			min-width: 75px;
 			margin: 2px;
 			cursor: pointer;
-			// background: red;
 			
 			.notice-del-btn, .notice-exp-btn  {
 				display: inline-block;
@@ -250,11 +245,6 @@ $boxShadow: 1px 1px 6px lightgray;
 				border: 2px solid white;
 				border-radius: 28px;
 			}
-
-			// .notice-exp-btn {
-			// 	display: inline-block;
-			// 	width: 50%;
-			// }
     }
 }
 

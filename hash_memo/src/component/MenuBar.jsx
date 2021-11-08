@@ -8,14 +8,14 @@ const MenuBar = (props) => {
   const state = useSelector(state => state)
   const dispatch = useDispatch()
   const history = useHistory();
-  const { hash } = props;
+  const { hash, mode } = props;
 
   const [onPaleteModal, setonPaleteModal] = useState(false)
   const [transPalete, setTransPalete] = useState(false)
-  const [deleteTarget, setDeleteTarget] = useState([])
 
   useEffect(() => {
     setTransPalete(true)
+    console.log(hash)
   }, [onPaleteModal])
   
   // 색상 코드값
@@ -23,7 +23,7 @@ const MenuBar = (props) => {
     cornsilk: 'cornsilk', 
     red: '#ff9da9',
     blue: '#b6ffff',
-    green: '#d7ffd9',
+    green: '#cffcd1',
     yellow: '#fff59d'
   }
   
@@ -43,8 +43,8 @@ const MenuBar = (props) => {
 
 
   const deleteList = () => {
-    if (!hash) {
-      alert ('현재 상세페이지에서만 클릭이 가능합니다')
+    if (!hash && mode === 'grid') {
+      alert ('상세페이지에서만 클릭이 가능합니다. 현재 태그가 없는 메모는 삭제가 불가능합니다')
       return
     }
       if (window.confirm('정말 이 메모를 삭제할까요?')) {
