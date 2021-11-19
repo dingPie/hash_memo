@@ -2,13 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { useHistory } from "react-router";
+import { IHash } from "../HashMemo";
+import { RootState } from "./../redux/redux-index"
 
+interface IMenu {
+  hash?: string;
+  mode?: string;
+}
 
-const MenuBar = (props) => {
-  const state = useSelector(state => state)
+const MenuBar = ({ hash, mode }:IMenu) => {
+  const state = useSelector((state:RootState) => state)
   const dispatch = useDispatch()
   const history = useHistory();
-  const { hash, mode } = props;
+  // const { hash, mode } = props;
 
   const [onPaleteModal, setonPaleteModal] = useState(false)
   const [transPalete, setTransPalete] = useState(false)
@@ -27,7 +33,7 @@ const MenuBar = (props) => {
     yellow: '#fff59d'
   }
   
-  const onPalete = (color) => {
+  const onPalete = (color: string) => {
     // gridPage에선 return
     if (!hash) {
       alert ('현재 상세페이지에서만 클릭이 가능하며, 태그가 없는 메모는 색상지정이 불가능합니다.')
@@ -48,7 +54,7 @@ const MenuBar = (props) => {
       return
     }
       if (window.confirm('정말 이 메모를 삭제할까요?')) {
-      let deleteDetail = state.reducer.filter(v => v.hash === hash)
+      let deleteDetail = state.reducer.filter((v :IHash) => v.hash === hash)
       console.log(deleteDetail)
       dispatch({ type: 'deleteLists', data: deleteDetail })
       history.push('/')
@@ -80,20 +86,20 @@ const MenuBar = (props) => {
       }
 
       <div className="menu-color" onClick={()=> { setonPaleteModal(!onPaleteModal); setTransPalete(false); } }>
-        <i class="fas fa-palette"></i>
+        <i className="fas fa-palette"></i>
       </div>
 
       <div className="menu-array" onClick= {() => deleteList()} >
-        <i class="fas fa-trash"></i>
+        <i className="fas fa-trash"></i>
       </div>
 
       <div className="menu-search">
          {/* 해당문구 background처리, 해당 문자로 ref지정, scroll 지정 */}
-         <i class="fas fa-search"></i>
+         <i className="fas fa-search"></i>
       </div>
 
       <div className="menu-popup">
-        <i class="far fa-caret-square-up"></i>
+        <i className="far fa-caret-square-up"></i>
       </div>
 
     </div>

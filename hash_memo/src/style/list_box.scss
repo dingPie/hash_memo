@@ -29,9 +29,11 @@ $boxShadow: 1px 1px 4px rgb(99, 99, 99);
     white-space: pre-wrap;
 }
 @mixin fixedCenter {
+    // 중앙정렬
     position: fixed;
     top: 50%;
     left: 50%;
+    background: blue;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);

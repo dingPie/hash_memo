@@ -1,17 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { IModal } from "./MakeDetail";
 
-const ModalAddDetail = (props) => {
+
+
+
+interface IModalAddDetail extends IModal {
+  setOnAddMemo: (v: boolean) => void
+}
+
+
+const ModalAddDetail = ({ modalContent, modalPosition, setModalContent, setOnAddMemo, hash }: IModalAddDetail) => {
   const state = useSelector(state => state)
   const dispatch = useDispatch()
-  const refText = useRef()
-  const { modalContent, modalPosition, setModalContent, setOnAddMemo, hash } = props;
+  const refText = useRef<HTMLTextAreaElement>(null)
+  // const { modalContent, modalPosition, setModalContent, setOnAddMemo, hash } = props;
 
   // let editValue = state.reducer.filter( value => value.id === parseInt(editTarget.id))[0] // && value.content === editTarget.innerText.trim()  이거 붙이면 수정할때부터 안됨ㅋㅋㅋㅋ왜몾찾누
   // let targetIndex = state.reducer.indexOf(editValue)
 
   useEffect(() => { // 추가창 등장시, textarae에 focus
-    refText.current.focus()
+    if (refText.current) refText.current.focus()
   }, [])
 
 	let modalMemoStyle = { // 좌표값이 매번 변하니, 변수로 지정
@@ -39,7 +48,7 @@ const ModalAddDetail = (props) => {
     });
     setOnAddMemo(false)
   }
-  const PressEnter = (e) => {
+  const PressEnter = (e :React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && e.shiftKey) return 
     if (e.key === 'Enter') addMemoDetail()
   }

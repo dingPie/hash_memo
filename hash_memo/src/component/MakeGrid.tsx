@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
+import { IHash } from "../HashMemo";
+import { RootState } from "../redux/redux-index";
 import '../style/grid_box.scss'
 import MakeDetail from "./detail/MakeDetail";
 import MenuBar from "./MenuBar";
 
 const MakeGrid = () => {
-	const state = useSelector(state => state)
+	const state = useSelector( (state :RootState) => state)
 
 
 // hash들만 중복 없이 따로 모아주는 함수
@@ -22,8 +24,8 @@ const hashTags = () => {
 	return value
 }
 
-let gridContent = (hash) => {
-	let value = state.reducer.map( v =>  // 이 안에서 반복문을 한번 더 돌려준다.
+let gridContent = (hash :string) => {
+	let value = state.reducer.map( (v :IHash) =>  // 이 안에서 반복문을 한번 더 돌려준다.
 		hash === v.hash && <li> {v.content} </li>
 		// 만약, 현재 (1번 반복문의) hash === data v.hash 라면, 값을 넣어준다. 아니면 자연스럽게 값이 안들어가기 때문에 각 맞는 hash의 위치에만 값이 들어가는것.
 	)
@@ -37,7 +39,7 @@ let gridMemo = hashTags().map( hash => ( // hashTag에서 뒤집어주고, 거�
 	<Link to= {'/detail/' + hash } style= {{ textDecoration: 'none', color: 'black' }} >
 
 		<ul className= {`grid ${hash}`}
-			style= {{ background: state.reducer.filter( v => v.hash === hash )[0].color }} >
+			style= {{ background: state.reducer.filter( (v :IHash) => v.hash === hash )[0].color }} >
 			{/* 인자로 받아온 hash값과 같은 hash들을 array로 만들어 준 후,, 해당 배열의 첫번째 색상( 어차피 모든 해쉬는 같은 색상으로 들어간다)을 색상으로 지정해준다.*/}
 			
 			<span> # {hash ? hash : '그 외'} {/* 제목용 */} </span>

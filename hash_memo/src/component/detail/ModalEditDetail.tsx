@@ -1,17 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { IHash } from "../../HashMemo";
+import { RootState } from "../../redux/redux-index";
 
-const ModalEditDetail = (props) => {
-  const state = useSelector(state => state)
+interface IModalEditContent {
+  modalContent: string | undefined;
+  modalPosition: number[];
+  setModalContent: (v: string) => void;
+  setOnEditMemo: (v: boolean) => void;
+  editTarget: EventTarget| null;
+}
+
+const ModalEditDetail = ( { modalContent, modalPosition, setModalContent, setOnEditMemo, editTarget } :IModalEditContent) => {
+  const state = useSelector((state :RootState) => state)
   const dispatch = useDispatch()
-  const modalRef = useRef()
-  const { modalContent, modalPosition, setModalContent, setOnEditMemo, editTarget } = props;
-
-  let editValue = state.reducer.filter( value => value.id === parseInt(editTarget.id))[0] // && value.content === editTarget.innerText.trim()  이거 붙이면 수정할때부터 안됨ㅋㅋㅋㅋ왜몾찾누
+  const modalRef = useRef<HTMLTextAreaElement>(null)
+  console.log(editTarget)
+  let editValue = state.reducer.filter( (value :IHash) => editTarget ? value.id === value.id : null)[0] // && value.content === editTarget.innerText.trim()  이거 붙이면 수정할때부터 안됨ㅋㅋㅋㅋ왜몾찾누
   let targetIndex = state.reducer.indexOf(editValue)
 
   useEffect(() => {
-    modalRef.current.focus()
+    if (modalRef.current) modalRef.current.focus()
   }, [])
 
 	let modalMemoStyle = { // 좌표값이 매번 변하니, 변수로 지정
@@ -51,7 +60,7 @@ const ModalEditDetail = (props) => {
   setOnEditMemo(false)
   }
 
-  const PressEnter = (e) => {
+  const PressEnter = (e :React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && e.shiftKey) return 
     if (e.key === 'Enter') editMemoDetail()
   }
@@ -60,14 +69,14 @@ const ModalEditDetail = (props) => {
     <div>
       
       <textarea
-        style= {modalMemoStyle} ref = {modalRef}
+        style= {modalMemoStyle as React.CSSProperties} ref = {modalRef}
         value= {modalContent}
         onChange= { (e) => setModalContent(e.target.value)}
         onKeyPress= {e => PressEnter(e)}
       >
       </textarea>
 
-      <button className='detail-edit-btn' style= {btnPositon}
+      <button className='detail-edit-btn' style= {btnPositon as React.CSSProperties}
         onClick= {editMemoDetail}
         > 수정 / 삭제
       </button>

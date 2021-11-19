@@ -2,18 +2,29 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import { IHash } from "../../HashMemo";
+import { RootState } from "../../redux/redux-index";
 
-const EditHash = (props) => {
-  const state = useSelector(state => state)
+interface IEditHash {
+  hash: string | undefined;
+  modalContent: string | undefined;
+  modalPosition: number[];
+  setModalContent: (v:string | undefined) => void;
+  setOnEditHash: (v:boolean) => void;
+}
+
+const EditHash = ( { hash, modalPosition, modalContent, setModalContent, setOnEditHash }:IEditHash ) => {
+  const state = useSelector( (state:RootState) => state)
   const dispatch = useDispatch()
-  const ref = useRef()
+  const ref = useRef<HTMLInputElement>(null)
   const history = useHistory()
   
-  let { hash, modalPosition, modalContent, setModalContent, setOnEditHash } = props;
-  let editValue = state.reducer.filter( value => value.hash === hash )[0]
+  let editValue = state.reducer.filter( (value:IHash) => value.hash === hash )[0]
 
   useEffect(() => {
-    ref.current.focus()
+    if (ref.current) {
+      ref.current.focus()
+    }
     setModalContent(hash)
   }, [])
 
@@ -49,7 +60,7 @@ const EditHash = (props) => {
     history.push(`${modalContent}`)
   }
 
-  const PressEnter = (e) => {
+  const PressEnter = (e :React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && e.shiftKey) return 
     if (e.key === 'Enter') addMemoDetail()
   }
@@ -59,13 +70,13 @@ const EditHash = (props) => {
   return (
     <div>
       
-      <input type="text" className= 'detail-hash' style= {modalMemoStyle} ref ={ref}
+      <input type="text" className= 'detail-hash' style= {modalMemoStyle as React.CSSProperties} ref ={ref}
         value= {modalContent}
         onChange= { (e) => setModalContent(e.target.value)}
         onKeyPress= {(e) => PressEnter(e)}
       />
 
-        <button className= 'detail-edit-btn' style= {btnPositon}
+        <button className= 'detail-edit-btn' style= {btnPositon as React.CSSProperties}
           onClick= {() => addMemoDetail()}
         > 변경 </button>
 

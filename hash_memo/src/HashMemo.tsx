@@ -7,14 +7,22 @@ import MakeGrid from "./component/MakeGrid";
 import MakeDetail from "./component/detail/MakeDetail";
 import './style/main.scss'
 
+export interface IHash {
+  id: number,
+  hash: string,
+  content: string,
+  color?: string
+}
+
+
 const HashMemo = () => {
-  const [mode, setMode] = useState('list')
-  const [icon, setIcon] = useState( <i class="fas fa-th-large"></i> )
+  const [mode, setMode] = useState<string>('list')
+  const [icon, setIcon] = useState( <i className="fas fa-th-large"></i> )
 
   const transMode = () => {
     mode === 'list'
-    ? (setMode('grid'), setIcon( <i class="far fa-comment-alt"></i> ) )
-    : (setMode('list'), setIcon( <i class="fas fa-th-large"></i> ) )
+    ? (setMode('grid'), setIcon( <i className="far fa-comment-alt"></i> ) )
+    : (setMode('list'), setIcon( <i className="fas fa-th-large"></i> ) )
   }
 
   const backgroundImg = {
