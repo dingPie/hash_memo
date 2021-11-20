@@ -4,12 +4,9 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { IHash } from "../../HashMemo";
 import { RootState } from "../../redux/redux-index";
+import { IModal } from './MakeDetail'
 
-interface IEditHash {
-  hash: string | undefined;
-  modalContent: string | undefined;
-  modalPosition: number[];
-  setModalContent: (v:string | undefined) => void;
+interface IEditHash extends IModal {
   setOnEditHash: (v:boolean) => void;
 }
 

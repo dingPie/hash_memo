@@ -1,13 +1,20 @@
 /* eslint-disable */
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { IHash } from "../../HashMemo";
+import { RootState } from "../../redux/redux-index";
 import OptionInputMemo from "./OptionInputMemo";
 
-const InputMemo = (props) => {
-  const state = useSelector(state => state) // connect 없이 redux의 state 조회가능
-  const dispatch = useDispatch() // redux의 액션 함수를 실행시킬 수 있음
+interface IInputMemo {
+  setOnCheckbox: (v: boolean) => void;
+  checkedValues: IHash[]
+  setCheckedValues: (V: IHash[]) => void;
 
-  const { setOnCheckbox, checkedValues, setCheckedValues } = props;
+} 
+
+const InputMemo = ( { setOnCheckbox, checkedValues, setCheckedValues }:IInputMemo ) => {
+  const state = useSelector((state: RootState) => state) // connect 없이 redux의 state 조회가능
+  const dispatch = useDispatch() // redux의 액션 함수를 실행시킬 수 있음
 
   const [inputMemo, setInputMemo] = useState('')
   const [onInputOption, setOnInputOption] = useState(false)
@@ -28,7 +35,7 @@ const InputMemo = (props) => {
 
     dispatch( { type: 'addMemo', data: {hash: hash, content: content} });
   }
-  const PressEnter = (e) => {
+  const PressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && e.shiftKey) return 
     if (e.key === 'Enter') addMemo()
   }
@@ -60,7 +67,7 @@ const InputMemo = (props) => {
 
         {/* option Modal button */}
         <button className= 'other-btn' onClick={() => setOnInputOption(!onInputOption)}>
-          <i class="far fa-caret-square-up"></i>  
+          <i className="far fa-caret-square-up"></i>  
         </button>
 
           {/* inputbox */}
@@ -72,7 +79,7 @@ const InputMemo = (props) => {
         
         {/* 메모 추가버튼 */}
         <button className= 'add-btn' onClick= { () => addMemo() }>
-          <i class="fas fa-plus-circle"></i>
+          <i className="fas fa-plus-circle"></i>
         </button>
       
        {/* 리스트 삭제모드용 UI */}

@@ -1,14 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootState } from "../../redux/redux-index";
+import { defaultValue } from './../../HashMemo'
 
-const Notice = (props) => {
-  const state = useSelector(state => state)
+interface INotice {
+  setOnNotice: (v: boolean) => void;
+} 
+
+const Notice = ({ setOnNotice }:INotice) => {
+  const state = useSelector((state: RootState) => state)
   const dispatch = useDispatch()
 
   const [memoLineClamp, setMemoLineClamp] = useState(1)
-
-  const { setOnNotice } = props;
 
 
   const deleteNotice = () => {
@@ -16,7 +20,7 @@ const Notice = (props) => {
     setOnNotice(false)
     dispatch({
       type: 'setNotice',
-      data: ''
+      data: defaultValue
     })
     }
   }
@@ -50,7 +54,7 @@ const Notice = (props) => {
           ✖
         </span>
         <span className="notice-exp-btn" onClick= {() => changeLine()} >
-          { memoLineClamp === 1 ? <i class="fas fa-chevron-down"></i> : <i class="fas fa-chevron-up"></i> }
+          { memoLineClamp === 1 ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i> }
           {/* <i class="fas fa-chevron-down"></i> */}
         </span> {/* 일단 위치부터 잡은 다음, 이거 클릭시 notice-memo width 혹은 줄 수 확장하는 식으로 */}
       </div>

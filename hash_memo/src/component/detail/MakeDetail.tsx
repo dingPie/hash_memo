@@ -11,7 +11,7 @@ import { RootState } from "../../redux/redux-index";
 import { IHash } from "../../HashMemo";
 // import onCilckOutside from 'react-onclickoutside'
 
-interface test {
+interface IMode {
 	mode: string;
 }
 
@@ -22,7 +22,7 @@ export interface IModal {
   setModalContent: (v:string | undefined) => void;
 }
 
-const MakeDetail = ( {mode}:test ):JSX.Element => {
+const MakeDetail = ( {mode}:IMode ):JSX.Element => {
 	const state = useSelector( (state:RootState) => state)
 	const dispatch = useDispatch()
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { IHash } from "../../HashMemo";
+import { defaultValue, IHash } from "../../HashMemo";
 import { RootState } from "../../redux/redux-index";
 
 interface IModalEditContent {
@@ -47,7 +47,7 @@ const ModalEditDetail = ( { modalContent, modalPosition, setModalContent, setOnE
     if (modalContent === '') {
       if (window.confirm('정말 삭제하시겠습니까?')) {
         dispatch({ type: 'deleteMemo', data: data})
-        dispatch({ type: 'setNotice', data: '' }) // 삭제시, 공지도 같이 삭제해줌
+        dispatch({ type: 'setNotice', data: defaultValue }) // 삭제시, 공지도 같이 삭제해줌
       }
     } else {
       dispatch({

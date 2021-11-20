@@ -14,6 +14,7 @@ export interface IHash {
   color?: string
 }
 
+export const defaultValue = {id: -1, hash: '', content: '', color: ''}
 
 const HashMemo = () => {
   const [mode, setMode] = useState<string>('list')

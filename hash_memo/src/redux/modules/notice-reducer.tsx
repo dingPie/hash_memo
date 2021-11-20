@@ -9,8 +9,6 @@ if (!localStorage.getItem('notice')) {
 ))}
 
 
-
-
 let noticeData = JSON.parse( localStorage.getItem('notice')! )
 const notice = ( state:IHash = noticeData, action:TypeAction ) => {
 

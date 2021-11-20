@@ -1,20 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { IHash } from "../../HashMemo";
+import { RootState } from "../../redux/redux-index";
 // import '../style/list_box.scss'
+import {defaultValue} from './../../HashMemo'
 
-const ModalEditList = (props) => {
-  const state = useSelector(state => state);
+interface IModalEditList {
+  editValue: IHash
+  setOnEditModal: (v: boolean)=> void;
+
+}
+
+
+const ModalEditList = ({ editValue, setOnEditModal }:IModalEditList ) => {
+  const state = useSelector((state: RootState) => state);
   const dispatch = useDispatch()
-  let { editValue, setOnEditModal, onEditModal } = props;
-  const refText = useRef() // textarea 포커스용
+  const refText = useRef<HTMLInputElement>(null) // textarea 포커스용
 
-  const [hashValue, setHashValue] = useState(editValue.hash)
+  const [hashValue, setHashValue] = useState<string | undefined>(editValue.hash)
   const [contentValue, setContentValue] = useState(editValue.content)
 
   let targetIndex = state.reducer.indexOf(editValue)
 
   useEffect(() => {
-    refText.current.focus()
+    if (refText.current) refText.current.focus()
   }, [])
 
   // 수정함수:  dispatch와 modal off
@@ -30,7 +39,7 @@ const ModalEditList = (props) => {
     setOnEditModal(false)
   }
   // 엔터키로 입력
-  const PressEnter = (e) => {
+  const PressEnter = (e: React.KeyboardEvent<HTMLInputElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && e.shiftKey) return
     // 모바일에서 enter 할만한걸 추가하자.
     if (e.key === 'Enter') {
@@ -39,9 +48,10 @@ const ModalEditList = (props) => {
   }
 
   // hash 공백을 막기위한 함수
-  const changeHash = (e) => {
-    setHashValue(e.target.value)
-    if (e.target.value === '') { // 빈 값일때는 undefined로 지정
+  const changeHash = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let eTarget = e.target
+    setHashValue(eTarget.value)
+    if (eTarget.value === '') { // 빈 값일때는 undefined로 지정
       setHashValue(undefined)
     }
   }
