@@ -1,11 +1,10 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import HashMemo from './HashMemo';
-import Data from './Data.jsx'
 
 import { Provider } from 'react-redux';
 import {  createStore } from 'redux';

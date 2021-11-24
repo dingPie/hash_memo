@@ -1,6 +1,6 @@
 import Data from '../../Data'
 import { IHash } from '../../HashMemo';
-
+import { defaultValue } from '../../HashMemo';
 
 // 초기값 실행
 if (!localStorage.getItem('local')) { 
@@ -12,15 +12,12 @@ const saveAndLoad = (list :IHash[]) => {
   localStorage.setItem('local', JSON.stringify(list)) //새로 업데이트 한 값을 저장해주고
 }
 
-const setColor = (state: IHash[], hash :string ) : IHash => {
+const setColor = (state: IHash[], hash :string ): IHash => {
   let value :IHash = state.filter( v => v.hash === hash )[0] // hash는 바꾸는 값. 만약에 새로 바꾸는 hash가 유일하다면, undefined 반환
-  console.log(value)
-  // if(!value) {
-  //   value = ''  // undefined면 '' 빈 값으로 만들어줌
-  // }
-   //추가해주는 값에 color가 붙었을때, 있는값은 잘 뜨고 없는값은 이제서야 undefined가 되기 때문에 오류가 안난다
+  if(!value) value = defaultValue
   return value
 }
+
 type TypeAction =
   | { type: 'addMemo'; data:IHash }
   | { type: 'deleteMemo'; data:IHash }
@@ -38,7 +35,7 @@ const reducer = ( state = jsonData, action: TypeAction) => { // 액션 함수.
       let hashValue :string | undefined = action.data.hash;
       if (hashValue) if (hashValue.includes('\/')) hashValue = hashValue.replace(/\//g, ", " ) // 정규표현식으로 슬래시를 ,으로 바꿔줌
       if (hashValue === '') hashValue = undefined // 빈 값이면 undefined 처리
-      let addMemeList :IHash[] = [...state, { id: Date.now(), hash: hashValue, content: action.data.content, color: setColor(state, action.data.hash) }] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
+      let addMemeList :IHash[] = [...state, { id: Date.now(), hash: hashValue, content: action.data.content, color: setColor(state, action.data.hash).color }] // 여길 state 로 가져와야 값들이 업데이트된다 ㅇㅇ
       saveAndLoad(addMemeList )
       return addMemeList // 위에서 jsonData 가져와서, 사실 이거 안해줘도 댐
 

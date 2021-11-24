@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import '../../style/detail_box.scss'
@@ -8,7 +8,7 @@ import ModalEditDetail from './ModalEditDetail'
 import ModalAddDetail from "./ModalAddDetail";
 import EditHash from "./EditHash";
 import { RootState } from "../../redux/redux-index";
-import { IHash } from "../../HashMemo";
+import { defaultValue, IHash } from "../../HashMemo";
 // import onCilckOutside from 'react-onclickoutside'
 
 interface IMode {
@@ -26,17 +26,16 @@ const MakeDetail = ( {mode}:IMode ):JSX.Element => {
 	const state = useSelector( (state:RootState) => state)
 	const dispatch = useDispatch()
 
-	// const { mode } = props;
+	let { hash } = useParams<{hash: string | undefined}>();
 
-	let hash: string | undefined = useParams();
 	if (hash === 'undefined') { // params가 'undefined'일때, string으로 받아온 값을 찐 undefined로 변환해줌
 		hash = undefined
 	}
 	const refDetail = useRef<HTMLButtonElement>(null); // 내용 가장 아래 위치한 addbtn 위치에 추가창 모달을 띄워주기 위함
-	
+
 	const [modalPosition, setModalPosition] = useState(new Array(4)) // 위치값을 받아올 빈 배열
 	const [modalContent, setModalContent] = useState <string | undefined>('') // textarea에 content삽입 및 onChange를 하기 위한 변수
-	const [editTarget, setEditTarget] = useState<EventTarget | null >(null) // hash, id 등 모든걸 포함한 타겟
+	// const [editTarget, setEditTarget] = useState<EventTarget | null >(null) // hash, id 등 모든걸 포함한 타겟
 	const [onEditMemo, setOnEditMemo] = useState(false) // 모달창(수정창) on/off
 	const [onAddMemo, setOnAddMemo] = useState(false) // 모달창(추가창) on/off
 	const [onEditHash, setOnEditHash] = useState(false)
@@ -47,7 +46,7 @@ const MakeDetail = ( {mode}:IMode ):JSX.Element => {
 		if (onAddMemo) setOnAddMemo(false)
 		if (onEditHash) setOnEditHash(false)
 		let eTarget = e.target as HTMLElement;
-		setEditTarget(e.target) // 타겟자체, 하위 컴포넌트에 전달용
+		// setEditTarget(e.target) // 타겟자체, 하위 컴포넌트에 전달용
 		setModalContent(eTarget.innerText) // 안에 컨텐츠 변경용
 		setModalPosition([eTarget.offsetLeft, e.pageY - 24, eTarget.offsetWidth, eTarget.offsetHeight]) // pageY로 바꿔서, 인터페이스 내부위치 적용완료.
 		console.log( '페이지',e.pageY)
@@ -82,8 +81,9 @@ const MakeDetail = ( {mode}:IMode ):JSX.Element => {
 
 	// useParams로 받아온 값과 비교, 같은 hash를 가진 값들만 뽑아옴
 	let targetHash = state.reducer.filter( (v:IHash) => v.hash === hash ) 
-	// detail에 들어갈 내용들
-	let detailMemo = targetHash.map( (v:IHash) => 
+
+	let detailMemo = targetHash.map( (v :IHash) => 
+
 		<li className= 'detail-content' style= {{background: v.color}} id= {v.id.toString()}
 			onClick= {(e)=> editMomoDetail(e)}> 
 			{v.content.trim()}
@@ -92,8 +92,8 @@ const MakeDetail = ( {mode}:IMode ):JSX.Element => {
 	
 	// detail의 모든 값이 삭제되어서, 빈 값이 되었을때 값을 못 불러옴을 방지해주기 위한 함수
 	let setColor = () => { 
-		let value = state.reducer.filter( (v:IHash) => v.hash === hash )[0]
-		if (!value)	value = ''
+		let value: IHash = state.reducer.filter( (v:IHash) => v.hash === hash )[0]
+		if (!value)	value = defaultValue;
 		return value
 	}
 
@@ -113,6 +113,7 @@ const MakeDetail = ( {mode}:IMode ):JSX.Element => {
 
 					{detailMemo}
 
+
 				{ onEditHash &&
 					<EditHash 
 						hash= {hash} modalContent= {modalContent} setModalContent= {setModalContent}
@@ -124,7 +125,7 @@ const MakeDetail = ( {mode}:IMode ):JSX.Element => {
 				{
 					onEditMemo &&
 					<ModalEditDetail // 수정창 모달
-						modalPosition= {modalPosition} modalContent= {modalContent} editTarget= {editTarget}
+						modalPosition= {modalPosition} modalContent= {modalContent}
 						setModalContent= {setModalContent} setOnEditMemo= {setOnEditMemo}
 					/>
 				}

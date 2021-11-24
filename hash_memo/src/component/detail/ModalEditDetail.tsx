@@ -8,25 +8,26 @@ interface IModalEditContent {
   modalPosition: number[];
   setModalContent: (v: string) => void;
   setOnEditMemo: (v: boolean) => void;
-  editTarget: EventTarget| null;
 }
 
-const ModalEditDetail = ( { modalContent, modalPosition, setModalContent, setOnEditMemo, editTarget } :IModalEditContent) => {
+const ModalEditDetail = ( { modalContent, modalPosition, setModalContent, setOnEditMemo } :IModalEditContent) => {
   const state = useSelector((state :RootState) => state)
   const dispatch = useDispatch()
   const modalRef = useRef<HTMLTextAreaElement>(null)
-  console.log(editTarget)
-  let editValue = state.reducer.filter( (value :IHash) => editTarget ? value.id === value.id : null)[0] // && value.content === editTarget.innerText.trim()  이거 붙이면 수정할때부터 안됨ㅋㅋㅋㅋ왜몾찾누
+  let editValue = state.reducer.filter( (value :IHash) => modalContent === value.content ? value : null)[0] // && value.content === editTarget.innerText.trim()  이거 붙이면 수정할때부터 안됨ㅋㅋㅋㅋ왜몾찾누
   let targetIndex = state.reducer.indexOf(editValue)
+ 
+  console.log(editValue)
 
   useEffect(() => {
     if (modalRef.current) modalRef.current.focus()
   }, [])
 
+
 	let modalMemoStyle = { // 좌표값이 매번 변하니, 변수로 지정
 		position: "absolute",
 		zIndex: 2,
-		background: !editValue.color ? 'cornsilk' : editValue.color ,
+		background: !editValue.color ? 'cornsilk' : editValue.color , // 여기 오류. 컬러값을 못읽어온다.
     fontSize: '16px',
 		left: modalPosition[0],
 		top: modalPosition[1],
@@ -46,7 +47,7 @@ const ModalEditDetail = ( { modalContent, modalPosition, setModalContent, setOnE
     let data = {id: editValue.id, hash: editValue.hash, content: modalContent, color: editValue.color}
     if (modalContent === '') {
       if (window.confirm('정말 삭제하시겠습니까?')) {
-        dispatch({ type: 'deleteMemo', data: data})
+        dispatch({ type: 'deleteMemo', data: {id:  editValue.id, hash: editValue.hash, content: modalContent }})
         dispatch({ type: 'setNotice', data: defaultValue }) // 삭제시, 공지도 같이 삭제해줌
       }
     } else {
