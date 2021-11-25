@@ -79,7 +79,7 @@ const MakeMemo = () => { // 값들을 반복문 형태로 추가해주는 함수
 				}
 	
 				{ v.hash &&
-				<span className= 'memo-hash' style= {{background: v.color}}> {v.hash} </span>
+					<span className= 'memo-hash' style= {{background: v.color}}> {v.hash} </span>
 				} 
 				
 				<span className= { expandMemo === v.id ? 'memo-content clicked' : 'memo-content' }>
@@ -91,6 +91,7 @@ const MakeMemo = () => { // 값들을 반복문 형태로 추가해주는 함수
 						{/*  이걸 클릭했을때, 클릭한 메모의 id를 참조하여 option창을 on/off해준다, transition 을 위해, 먼저 값을 false로 해주고, 이후 Effect로 true로 해줌 */}
 					<i className="fas fa-plus-square"></i>
 				</span> 
+
 			</div>
 
 			{	v.id === onOptionModal

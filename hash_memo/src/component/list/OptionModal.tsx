@@ -4,7 +4,7 @@ import { IHash } from "../../HashMemo";
 import { RootState } from "../../redux/redux-index";
 import {defaultValue} from './../../HashMemo'
 
-interface OptionModal {
+interface IOptionModal {
 	value: IHash;
 	expandMemo: number;
 	setEditValue: (v :IHash) => void;
@@ -14,7 +14,7 @@ interface OptionModal {
 	setExpandMemo: (v : number) => void;
 }
 
-const OptionModal = ({ value, setEditValue, setOnEditModal, setOnNotice, setOnOptionModal, setExpandMemo, expandMemo }: OptionModal) => {
+const OptionModal = ({ value, setEditValue, setOnEditModal, setOnNotice, setOnOptionModal, setExpandMemo, expandMemo }: IOptionModal) => {
   const state = useSelector((state: RootState) => state)
   const dispatch = useDispatch()
   
@@ -27,7 +27,6 @@ const OptionModal = ({ value, setEditValue, setOnEditModal, setOnNotice, setOnOp
 
 	// 수정용 modal창을 열고, 해당 값을 전달해주는 함수.
 	const openEditModal = (id:number, hash:string, content:string) => {
-		// 클릭한 내용의 id랑 content로 찾아서, 컴포넌트로 전달해준다.
 		let target= state.reducer.filter( (value: IHash) => value.id === id && value.content === content )[0]
 		setEditValue(target)
 		setOnEditModal(true)

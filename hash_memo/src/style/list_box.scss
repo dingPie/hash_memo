@@ -1,4 +1,5 @@
-$deepBlue: rgb(71, 71, 71);;
+$mainColor: rgb(71, 71, 71);;
+$cottenWhite: #fff7f2;
 $boxShadow: 1px 1px 4px rgb(99, 99, 99);
 
 .list-box {
@@ -44,7 +45,7 @@ $boxShadow: 1px 1px 4px rgb(99, 99, 99);
     align-self: center;
     border-width: 2px;
     border-radius: 3px;
-    border-color: $deepBlue;
+    border-color: $mainColor;
 }
 
 
@@ -90,7 +91,7 @@ $boxShadow: 1px 1px 4px rgb(99, 99, 99);
             cursor: pointer;
             font-size: 24px;
             margin: 0 4px;
-            color: $deepBlue;
+            color: $mainColor;
         }
     
 }
@@ -100,7 +101,7 @@ $boxShadow: 1px 1px 4px rgb(99, 99, 99);
         margin: 4px 24px 0 0;
 
         span {
-            background: $deepBlue;
+            background: $mainColor;
             width: 26px;
             height: 26px;
             color: white;
@@ -137,8 +138,8 @@ $boxShadow: 1px 1px 4px rgb(99, 99, 99);
     text-align: center;
     width: 400px;
     height: 240px;
-    background: white;
-    border: 8px  $deepBlue solid;
+    background: $cottenWhite;
+    border: 8px  $mainColor solid;
     border-radius: 12px;
 
     .edit-modal-x {
@@ -169,14 +170,14 @@ $boxShadow: 1px 1px 4px rgb(99, 99, 99);
         width: 4px;
     }    
     .edit-modal-content::-webkit-scrollbar-thumb {
-        background: $deepBlue;
+        background: $mainColor;
         border-radius: 10px;
     }
     .edit-modal-btn {
         margin: 12px;
         width: 120px;
-        background: white;
-        color: $deepBlue;
+        background: $mainColor;
+        color: white;
         @include modal_border;
         border-width: 4px;
     }
@@ -189,11 +190,11 @@ $boxShadow: 1px 1px 4px rgb(99, 99, 99);
     display: flex;
     justify-content: space-between;
     z-index: 3;
-    width: 97.5%;
+    width: 95%;
     padding: 4px 0;
     // height: 48px;
-    left: 0.1%;
-    background: $deepBlue;
+    left: 2%;
+    background: $mainColor;
     opacity: 0.9;
     margin: 6px 4px;
     border-radius: 8px;
@@ -241,7 +242,7 @@ $boxShadow: 1px 1px 4px rgb(99, 99, 99);
 				height: 28px;
 				line-height: 28px;
 				text-align: center;
-				color: $deepBlue;
+				color: $mainColor;
 				font-weight: bold;
 				background: white;
 				border: 2px solid white;
