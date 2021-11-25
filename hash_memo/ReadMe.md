@@ -49,7 +49,9 @@ netlify를 통해 배포되었습니다.
 |<img src='https://user-images.githubusercontent.com/82368684/143402449-2c254ed0-3808-4282-81b0-cac8ea5b1b28.png' width="300px" > | <img src='https://user-images.githubusercontent.com/82368684/143402473-b9e318c4-cd4a-45c0-8b55-99ae59970889.png' width="300px" > | <img src='https://user-images.githubusercontent.com/82368684/143403859-fc46f3c8-521d-45fc-8743-6751b3a21a6c.png' width="300px" >|
 | 아래 +버튼 혹은 엔터시 내용 추가가 가능합니다.<br>내용 뒤에 '#'를 붙이면 HashTag가 붙으며, 추후 Grid나 Detail 페이지에 모아서 볼 수 있습니다.<br> 여러개의 '#'는 설정이 불가능하며, split으로 '#'를 인식하니 맨 앞에 #를 붙이면 오류가 납니다. | 수정창은 각 메모의 오른쪽 + 버튼을 통해 이용이 가능하며, 각 메뉴는 <br> 삭제, 수정, 확장, 공지 입니다. <br> 공지는 한번에 한가지만 가능하고, 공지 확장시 최대 10줄까지 표시가 됩니다. | 여러 메모를 한번에 컨트롤하는 기능이며, 현재는 '삭제'만 구현되어 있습니다. <br> 체크박스로 체크한 메모들을 한번에 삭제가 가능합니다.|
 
-<br><br>
+
+<br>
+
 
 ### 2. Grid 페이지
 
@@ -61,7 +63,8 @@ List 메모에서 각 HashTag를 단 메모드를 모아서 보여주는 페이�
 |<img src='https://user-images.githubusercontent.com/82368684/143405035-096f622c-d7f3-4d43-8fc9-997ca42f4c8d.png' width="400px"> | <img src='https://user-images.githubusercontent.com/82368684/143405113-5faad3a2-95f9-4a3e-9b98-ade1df83c341.png' width="400px"> |
 | 기본 모바일페이지에서 보이는 페이지입니다. <br> 각 메모 클릭시 해당 페이지의 Detail페이지로 이동이 가능합니다. <br> 현재 아래 메뉴바들은 Grid페이지에선 사용이 불가능합니다. | PC화면에서의 페이지입니다. Display grid로 만들어졌으며, 화면 크기에따라 각 메모가 한 줄에 2, 3, 4개씩 표시됩니다.|
 
-<br><br>
+
+<br>
 
 ### 3. Detail 페이지
 같은 HashTag가 사용된 메모들을 모아서 보여주는 페이지입니다. <br>
