@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
 import { IHash } from "../../HashMemo";
 import { RootState } from "../../redux/redux-index";
 import { IModal } from './MakeDetail'
@@ -19,9 +18,7 @@ const EditHash = ( { hash, modalPosition, modalContent, setModalContent, setOnEd
   let editValue = state.reducer.filter( (value:IHash) => value.hash === hash )[0]
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.focus()
-    }
+    if (ref.current) ref.current.focus()
     setModalContent(hash)
   }, [])
 
@@ -51,18 +48,16 @@ const EditHash = ( { hash, modalPosition, modalContent, setModalContent, setOnEd
     dispatch( {
       type: 'editHash',
       targetHash: hash,
-      newHash: modalContent
+      newHash: modalContent,
     });
     setOnEditHash(false)
-    history.push(`${modalContent}`)
+    history.push(`${modalContent}`) // Hash변경시 해당 hash로 url 변경해줌
   }
 
   const PressEnter = (e :React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && e.shiftKey) return 
     if (e.key === 'Enter') addMemoDetail()
   }
-
-
 
   return (
     <div>

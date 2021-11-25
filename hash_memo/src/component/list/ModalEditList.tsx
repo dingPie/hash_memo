@@ -2,13 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IHash } from "../../HashMemo";
 import { RootState } from "../../redux/redux-index";
-// import '../style/list_box.scss'
-import {defaultValue} from './../../HashMemo'
+import { defaultValue } from './../../HashMemo'
 
 interface IModalEditList {
   editValue: IHash
   setOnEditModal: (v: boolean)=> void;
-
 }
 
 

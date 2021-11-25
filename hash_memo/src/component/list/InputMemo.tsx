@@ -1,18 +1,17 @@
 /* eslint-disable */
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IHash } from "../../HashMemo";
 import { RootState } from "../../redux/redux-index";
 import OptionInputMemo from "./OptionInputMemo";
 
 interface IInputMemo {
+  checkedValues: IHash[];
   setOnCheckbox: (v: boolean) => void;
-  checkedValues: IHash[]
   setCheckedValues: (V: IHash[]) => void;
-
 } 
 
-const InputMemo = ( { setOnCheckbox, checkedValues, setCheckedValues }:IInputMemo ) => {
+const InputMemo = ( { checkedValues, setOnCheckbox, setCheckedValues }:IInputMemo ) => {
   const state = useSelector((state: RootState) => state) // connect 없이 redux의 state 조회가능
   const dispatch = useDispatch() // redux의 액션 함수를 실행시킬 수 있음
 
@@ -20,41 +19,35 @@ const InputMemo = ( { setOnCheckbox, checkedValues, setCheckedValues }:IInputMem
   const [onInputOption, setOnInputOption] = useState(false)
   const [onDeleteMode, setOnDeleteMode] = useState(false)
 
-
   const addMemo = () => {
     let value = inputMemo; // 입력값
     let target = value.split('#') // split으로 hash와 content를 나눈다
     let content = target[0].trim()
     let hash = target[1]
     // 여기 디테일 페이지일때는 조건문 하나 써서, 덮어쓰기하자.
-    if (content === '') {
-      alert('내용을 입력하세요!')
-      return
-    }
+    if (content === '') return
     setInputMemo('')
 
     dispatch( { type: 'addMemo', data: {hash: hash, content: content} });
   }
+
   const PressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && e.shiftKey) return 
     if (e.key === 'Enter') addMemo()
   }
 
-  const cleanDeleteData =() => {
+  // 리스트 삭제 취소키
+  const cancelDelMode =() => {
     setOnDeleteMode(false)
     setOnCheckbox(false)
     setCheckedValues([])
-  }
-  // 리스트 삭제 취소키
-  const cancelDelMode =() => {
-    cleanDeleteData()
   }
 
   // 리스트 삭제 전달 및 모달꺼주기
   const deleteLists =() =>{
     console.log(checkedValues)
     dispatch({ type: 'deleteLists', data: checkedValues })
-    cleanDeleteData()
+    cancelDelMode()
   }
 
     return (

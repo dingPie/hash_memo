@@ -1,10 +1,9 @@
 /* eslint-disable */
 import React, { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import InputMemo from "./InputMemo";
 import Notice from "./Notice";
 import { CSSTransition } from "react-transition-group";
-
 import ModalEditList from './ModalEditList'
 import '../../style/list_box.scss'
 import OptionModal from "./OptionModal";
@@ -17,10 +16,10 @@ const MakeMemo = () => { // 값들을 반복문 형태로 추가해주는 함수
 	const state = useSelector((state: RootState) => state) // connect 없이 redux의 state 조회가능
 	// const stateNotice = useSelector((state: RootState | string) => state) 
 
-	const [onOptionModal, setOnOptionModal] = useState<number>(-1) // 수정, 추가 등 받아오는 값, 해당되는 한가지만 띄워줘야해서, t/f가 아닌 스트링으로 받아옴
+	const [onOptionModal, setOnOptionModal] = useState<number>(-1) // 수정, 추가 등 받아오는 값, 해당되는 한가지만 띄워줘야해서, t/f가 아닌 넘버로 받아옴
+	const [expandMemo, setExpandMemo] = useState<number>(-1) // 확대하여 보여줄 값의 style 지정을 위한 state
 	const [onEditModal, setOnEditModal] = useState(false) // 수정창 모달 on/off
 	const [editValue, setEditValue] = useState<IHash>(defaultValue) // 수정창 모달에 전달할 value
-	const [expandMemo, setExpandMemo] = useState<number>(-1) // 확대하여 보여줄 값의 style 지정을 위한 state
 	const [transOption, setTransOption] = useState(false) // 트랜지션 애니메이션 관리를 위한 state
 
 	const [onNotice, setOnNotice] = useState(true) // notice 모달창 관리
@@ -34,7 +33,6 @@ const MakeMemo = () => { // 값들을 반복문 형태로 추가해주는 함수
 
   // 메세지 추가시 마지막 메모 focus
   const focusLast = () => {
-    // listDom.current.focus() // list-box DOM
 		let posY;
 		if (refLastMemo.current) {
     	let pos = refLastMemo.current
@@ -45,12 +43,11 @@ const MakeMemo = () => { // 값들을 반복문 형태로 추가해주는 함수
 		}
 	}
 
-	const checkEvent = (e:React.MouseEvent<HTMLInputElement, MouseEvent>, value: IHash) => {
-		let eTarget = e.target
-		if(eTarget) { // true로 체크 할 때 추가 checked
+	const checkEvent = (value: IHash) => {
+		if(!checkedValues.includes(value)) { // true로 체크 할 때 추가 checked
 			setCheckedValues([...checkedValues, value])
 		} else { // false로 체크할땐 제거 
-			let deleteValue = checkedValues.filter(v => v !== value) 
+			let deleteValue = checkedValues.filter(v => v !== value) //이거 제대로 작동안함
 			setCheckedValues(deleteValue)
 		}
 	}
@@ -77,7 +74,7 @@ const MakeMemo = () => { // 값들을 반복문 형태로 추가해주는 함수
 	
 				{ onCheckbox &&
 					<input className="option-checkbox" type="checkbox" id={i.toString()}
-						onClick= { (e)=> checkEvent(e, v) }
+						onClick= { (e)=> checkEvent(v) }
 					/>
 				}
 	

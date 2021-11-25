@@ -8,7 +8,7 @@ interface IOptionInputMemo {
 
 const OptionInputMemo = ({ setOnCheckbox, setOnDeleteMode, setOnInputOption }: IOptionInputMemo) => { // list -> input -> 여기
 
- const onClick =() => {
+ const onClickHandler =() => {
   setOnDeleteMode(true)
   setOnCheckbox(true)
   setOnInputOption(false)
@@ -18,7 +18,7 @@ const OptionInputMemo = ({ setOnCheckbox, setOnDeleteMode, setOnInputOption }: I
       <div className= 'input-option-modal' >
          
         <button className="list-delete">
-          <i className="fas fa-trash" onClick= {() => onClick()} ></i> 
+          <i className="fas fa-trash" onClick= {() => onClickHandler()} ></i> 
         </button>
 
       </div>

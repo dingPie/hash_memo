@@ -14,7 +14,6 @@ const MenuBar = ({ hash, mode }:IMenu) => {
   const state = useSelector((state:RootState) => state)
   const dispatch = useDispatch()
   const history = useHistory();
-  // const { hash, mode } = props;
 
   const [onPaleteModal, setonPaleteModal] = useState(false)
   const [transPalete, setTransPalete] = useState(false)
@@ -42,7 +41,7 @@ const MenuBar = ({ hash, mode }:IMenu) => {
     dispatch( { 
       type: 'changeColor',
       targetHash: hash,
-      color: color, // 인자
+      color: color,
     })
     setonPaleteModal(!onPaleteModal)
   }

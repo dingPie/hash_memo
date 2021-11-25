@@ -6,18 +6,18 @@ import { RootState } from "../../redux/redux-index";
 interface IModalEditContent {
   modalContent: string | undefined;
   modalPosition: number[];
+  modalId: number;
   setModalContent: (v: string) => void;
   setOnEditMemo: (v: boolean) => void;
 }
 
-const ModalEditDetail = ( { modalContent, modalPosition, setModalContent, setOnEditMemo } :IModalEditContent) => {
+const ModalEditDetail = ( { modalContent, modalPosition, modalId, setModalContent, setOnEditMemo } :IModalEditContent) => {
   const state = useSelector((state :RootState) => state)
   const dispatch = useDispatch()
   const modalRef = useRef<HTMLTextAreaElement>(null)
-  let editValue = state.reducer.filter( (value :IHash) => modalContent === value.content ? value : null)[0] // && value.content === editTarget.innerText.trim()  이거 붙이면 수정할때부터 안됨ㅋㅋㅋㅋ왜몾찾누
+  let editValue = state.reducer.filter( (value :IHash) => modalId === value.id )[0]
+  // 이게 rerender 되면서 값이 같은 값을 못찾아오는듯
   let targetIndex = state.reducer.indexOf(editValue)
- 
-  console.log(editValue)
 
   useEffect(() => {
     if (modalRef.current) modalRef.current.focus()
@@ -27,7 +27,7 @@ const ModalEditDetail = ( { modalContent, modalPosition, setModalContent, setOnE
 	let modalMemoStyle = { // 좌표값이 매번 변하니, 변수로 지정
 		position: "absolute",
 		zIndex: 2,
-		background: !editValue.color ? 'cornsilk' : editValue.color , // 여기 오류. 컬러값을 못읽어온다.
+		background: editValue.color ? editValue.color : 'cornsilk' , // 여기 오류. 컬러값을 못읽어온다.
     fontSize: '16px',
 		left: modalPosition[0],
 		top: modalPosition[1],
@@ -72,7 +72,7 @@ const ModalEditDetail = ( { modalContent, modalPosition, setModalContent, setOnE
       <textarea
         style= {modalMemoStyle as React.CSSProperties} ref = {modalRef}
         value= {modalContent}
-        onChange= { (e) => setModalContent(e.target.value)}
+        onChange= {(e) => setModalContent(e.target.value)}
         onKeyPress= {e => PressEnter(e)}
       >
       </textarea>

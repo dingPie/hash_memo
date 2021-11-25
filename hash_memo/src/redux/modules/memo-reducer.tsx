@@ -7,22 +7,24 @@ if (!localStorage.getItem('local')) {
   localStorage.setItem('local', JSON.stringify(Data))
 } 
 let jsonData = JSON.parse(localStorage.getItem('local')!); // data에 넣을 변수
-
+// Local 저장
 const saveAndLoad = (list :IHash[]) => {
   localStorage.setItem('local', JSON.stringify(list)) //새로 업데이트 한 값을 저장해주고
 }
-
+// 같은 컬러 찾아서 지정해줌
 const setColor = (state: IHash[], hash :string ): IHash => {
   let value :IHash = state.filter( v => v.hash === hash )[0] // hash는 바꾸는 값. 만약에 새로 바꾸는 hash가 유일하다면, undefined 반환
   if(!value) value = defaultValue
+  console.log(value)
   return value
 }
+
 
 type TypeAction =
   | { type: 'addMemo'; data:IHash }
   | { type: 'deleteMemo'; data:IHash }
   | { type: 'editMemo'; index: number; data:IHash }
-  | { type: 'editHash'; targetHash: string ;newHash: string }
+  | { type: 'editHash'; targetHash: string; newHash: string }
   | { type: 'changeColor'; targetHash: string; color: string }
   | { type: 'deleteLists', data: IHash[] }
 
@@ -57,8 +59,8 @@ const reducer = ( state = jsonData, action: TypeAction) => { // 액션 함수.
     case 'editHash':
       let editHashList = state.map( (v:IHash) => 
         v.hash === action.targetHash
-        ? { id: v.id, hash: action.newHash, content: v.content, color: v.color } // 스타일 지정해주고
-        : { id: v.id, hash: v.hash, content: v.content, color: v.color } // 아니묜 그대로
+        ? { id: v.id, hash: action.newHash, content: v.content, color: setColor(state, action.newHash).color } // 스타일 지정해주고
+        : { id: v.id, hash: v.hash, content: v.content, color: v.color} // 아니묜 그대로
       )
       saveAndLoad(editHashList)
       return editHashList

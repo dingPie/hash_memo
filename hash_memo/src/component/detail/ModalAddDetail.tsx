@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { IModal } from "./MakeDetail";
 
 
-
-
 interface IModalAddDetail extends IModal {
   setOnAddMemo: (v: boolean) => void
 }
@@ -14,10 +12,6 @@ const ModalAddDetail = ({ modalContent, modalPosition, setModalContent, setOnAdd
   const state = useSelector(state => state)
   const dispatch = useDispatch()
   const refText = useRef<HTMLTextAreaElement>(null)
-  // const { modalContent, modalPosition, setModalContent, setOnAddMemo, hash } = props;
-
-  // let editValue = state.reducer.filter( value => value.id === parseInt(editTarget.id))[0] // && value.content === editTarget.innerText.trim()  이거 붙이면 수정할때부터 안됨ㅋㅋㅋㅋ왜몾찾누
-  // let targetIndex = state.reducer.indexOf(editValue)
 
   useEffect(() => { // 추가창 등장시, textarae에 focus
     if (refText.current) refText.current.focus()
@@ -64,9 +58,8 @@ const ModalAddDetail = ({ modalContent, modalPosition, setModalContent, setOnAdd
       >
       </textarea>
 
-      <button  className= 'detail-add-btn'
-        onClick= {addMemoDetail}
-      > 추가
+      <button className= 'detail-add-btn' onClick= {addMemoDetail}>
+        추가
       </button>
 
     </div>
