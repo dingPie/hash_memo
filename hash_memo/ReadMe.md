@@ -10,7 +10,7 @@
 ## 사용된 기술
 <br>
 
-1. React.js
+1. React.js<br>
 SPA웹앱으로 구성되었습니다.
 <br>
 
